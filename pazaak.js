@@ -32,36 +32,57 @@ class player {
     console.log('###########################')
     let generatedIndex;
     generatedIndex = randomNumber();
-    console.log(`--[LOG]---We have generated index number of: [${generatedIndex}]`);
+/*     console.log(`--[LOG]---We have generated index number of: [${generatedIndex}]`); */
 
     
     if (
       generatedIndex <= cardStack.length &&
       cardStack[generatedIndex] !== null
     ) {
-      console.log(`You have drawn card no.: ${cardStack[generatedIndex]}`);
+      console.log(`${this.name} have drawn card no.: ${cardStack[generatedIndex]}`);
       this.cardPool.push(cardStack[generatedIndex]);
       cardStack.splice(generatedIndex, 1, null);
 
-      console.log(`--[LOG]---Stack status: [${cardStack}]`);
-      console.log(`Player card pool: ${this.cardPool}`);
+/*       console.log(`--[LOG]---Stack status: [${cardStack}]`); */
+      console.log(`${this.name} card pool: ${this.cardPool}`);
+      this.cardPool.length > 0 ?  this.scoreKeeper() : console.log('--[LOG]---Pool is empty');
     } else if (
       generatedIndex > cardStack.length ||
       cardStack[generatedIndex] === null
     ) {
       check() === true
         ? console.log("--[LOG]---No more cards left")
-        : this.drawCards() +
+        : this.drawCards()/*  +
           console.log(
-            `--[LOG]---Generated index: ${generatedIndex} is bigger than  Card Stack indexes, drawing again!`
-          );
+            `--[LOG]---Generated index: ${generatedIndex} was unavailable, card was drawn again---[LOG]--`
+          ) */;
     } else {
     }
-    this.cardPool.length > 0 ?  scoreKeeper() : console.log('--[LOG]---Player pool is empty. It must be a first');
+
   }
  turn () {   
-  this.score < 20 ? this.drawCards() : this.score >= 20 ? winHandler(this.score) : console.log('Error') 
+  this.score < 20 ? this.drawCards() : this.score >= 20 ? this.winHandler() : console.log('Error') 
 } 
+
+scoreKeeper() {
+  this.score = this.cardPool.reduce((acc,curVal) => {return acc + curVal});
+  console.log(`${this.name} SCORE: ..::${this.score}::..`);
+}
+winHandler() {
+  this.score === 20 ? console.log(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`) : this.score > 20 ? console.log(`_^_^_^_^_^_${this.name} has lost_^_^_^_^_^_`) : console.log(`--[LOG]---Keep playing`);
+}
+
+useCard() {
+  if (!!this.hand[0]){
+console.log(`${this.name} used card no.: ${this.hand[0]}`)
+this.cardPool.push(this.hand[0]);
+this.hand.splice(this.hand[0], 1, null);
+this.scoreKeeper();
+firstCardInHand.classList.add('blocked');
+aiBehavior();}
+else {}
+}
+
 }
 
 function check() {
@@ -73,46 +94,45 @@ function randomNumber() {
 }
 
 
-function scoreKeeper() {
-  playerScore = playerPool.reduce((acc,curVal) => {return acc + curVal});
-  aiScore = enemyPool.reduce((acc,curVal) => {return acc + curVal});
-  console.log(`Player counter: ${playerScore}`);
-  console.log(`AI counter: ${aiScore}`)
-  return humanPlayer.score = playerScore;
-}
-function winHandler(playerScore) {
-  playerScore === 20 ? console.log('win') : playerScore > 20 ? console.log(`${playerScore} you lose`) : console.log(`--[LOG]---Keep playing`)
+
+
+function multiPlayer() {  
+  humanPlayer.turn(humanPlayer);
+  aiBehavior();
 }
 
 
+function aiBehavior(){
+  if ((aiPlayer.score === 18 && !aiPlayer.hand[0]) || aiPlayer.score === 19) {
+    console.log('AI stand the game')
+  } else if (humanPlayer.score >= 20) {
+
+  } else if (aiPlayer.score === 18) {
+   aiPlayer.useCard(); 
+  }else {
+    aiPlayer.turn(aiPlayer);
+  }
+}
 playerHand = [-4, 3, 3, -2];
 playerPool = [];
 playerScore = 0;
-const humanPlayer = new player("You", playerPool, playerHand, playerScore);
+const humanPlayer = new player("Ukwial", playerPool, playerHand, playerScore);
 
-enemyHand = [2, 2, 4, -1];
-enemyPool = [1];
+aiHand = [2, 2, 4, -1];
+aiPool = [];
+aiScore = 0;
+const aiPlayer = new player ('Opponent', aiPool, aiHand, aiScore)
 
 
 const drawCardBtn = document.querySelector('#draw-card');
-drawCardBtn.addEventListener('click', humanPlayer.turn.bind(humanPlayer))
+drawCardBtn.addEventListener('click', multiPlayer)
 
 const firstCardInHand = document.querySelector('#first-card');
 const secondCardInHand = document.querySelector('#second-card');
 const thirdCardInHand = document.querySelector('#third-card');
 const fourthCardInHand = document.querySelector('#fourth-card');
 
-function useCard(hand, pool) {
-  if (!!hand[0]){
-console.log('Used card no.: ' + hand[0])
-pool.push(hand[0]);
-playerHand.splice(hand[0], 1, null);
-scoreKeeper();
-firstCardInHand.classList.add('blocked');}
-else {
-}
-}
 
-firstCardInHand.addEventListener('click', useCard.bind(null, playerHand, playerPool))
+firstCardInHand.addEventListener('click', humanPlayer.useCard.bind(humanPlayer))
 standBtn = document.querySelector('#stand');
-standBtn.addEventListener('click', humanPlayer.turn.bind(humanPlayer))
+standBtn.addEventListener('click', aiPlayer.turn.bind(aiPlayer))

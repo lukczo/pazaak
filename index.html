@@ -8,8 +8,23 @@
 </head>
 <body>
 
-<main>
-    <div class ="player">
+<main class="flex">
+    <div class="header flex">
+        <div class="flex"><h1>Pazaak Table</h1></div>
+        <div class="flex"> <ul>
+<li>
+    Score: <span id="score"></span>
+</li>
+<li><button id="draw-card">Turn</button></li>
+<li id = "stand">  <button>Stand</button></li>
+        </ul>
+        
+        </div>
+
+
+    </div>
+    <div class ="player  flex">
+        <div class="flex">
         <ul>
             <li>Player</li>
             <li>Card on the table: [     ]</li>
@@ -17,13 +32,11 @@
             <li><button id="first-card">[Card: -4]</button></li>
                 <li> <button id="second-card">2nd Card in hand</button></li>
                     <li> <button id="third-card">3rd Card in hand</button></li>
-                        <li>  <button id="fourth-card">4th Card in hand</button></li>
-                        
-            <li><button id="draw-card">Turn</button></li>
-                            <li id = "stand">  <button>Stand</button></li>
+                        <li>  <button id="fourth-card">4th Card in hand</button></li>                    
         </ul>
     </div>
-    <div class ="ai">
+    </div>
+    <div class ="ai  flex">
         <ul>
             <li>Opponent</li>
             <li>Card on the table</li>
