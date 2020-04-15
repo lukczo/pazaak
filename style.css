@@ -19,6 +19,8 @@ input,select{vertical-align:middle}
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgb(24, 26, 26);
+    color: white;
+    font-size: 1.2rem;
 }
 
 .flex {
@@ -76,4 +78,35 @@ button {
 button:hover {
     background-color: springgreen;
     cursor: pointer;
+}
+
+.pazaak-card {
+    background-color: grey;
+    width: 75px;
+    height: 100px;
+    margin: 10px;
+    border-radius: 5px;
+    
+}
+.pazaak-card {
+    align-self: flex-end;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+.hand {
+    background-color: seagreen;
+}
+
+.pazaak-card:hover {
+    transform: scale(1.1);
+    background-color: springgreen;
+    cursor: pointer;
+}
+
+.playersHeader{
+    align-self: center;
+    align-items: center;
+    font-size: 2rem;
+    font-weight: bold;
 }
