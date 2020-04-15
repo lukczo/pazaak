@@ -11,8 +11,8 @@ function tossCards() {
   for (i = 2; i < dealtCards.length; ++i) {
     output = dealtCards.charAt(i);
     output === "0"
-      ? cardStack.push(parseInt(output) + 1)
-      : cardStack.push(parseInt(output));
+      ? cardStack.push(parseInt(output) + 2)
+      : output === "1" ? cardStack.push(parseInt(output + 1)) : cardStack.push(parseInt(output));
   }
 
   console.log("--[LOG]---Current cardstack is:", cardStack);
