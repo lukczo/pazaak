@@ -22,10 +22,11 @@ function tossCards() {
 tossCards();
 
 class player {
-  constructor(name, cardPool, hand) {
+  constructor(name, cardPool, hand, score) {
     this.name = name,
     this.cardPool = cardPool,
-    this.hand = hand}
+    this.hand = hand,
+  this.score = score}
 
   drawCards() {
     console.log('###########################')
@@ -58,10 +59,9 @@ class player {
     }
     this.cardPool.length > 0 ?  scoreKeeper() : console.log('--[LOG]---Player pool is empty. It must be a first');
   }
-/* turn () {
-   
-} */
-
+ turn () {   
+  this.score < 20 ? this.drawCards() : this.score >= 20 ? winHandler(this.score) : console.log('Error') 
+} 
 }
 
 function check() {
@@ -78,7 +78,7 @@ function scoreKeeper() {
   aiScore = enemyPool.reduce((acc,curVal) => {return acc + curVal});
   console.log(`Player counter: ${playerScore}`);
   console.log(`AI counter: ${aiScore}`)
-  winHandler(playerScore);
+  return humanPlayer.score = playerScore;
 }
 function winHandler(playerScore) {
   playerScore === 20 ? console.log('win') : playerScore > 20 ? console.log(`${playerScore} you lose`) : console.log(`--[LOG]---Keep playing`)
@@ -87,14 +87,15 @@ function winHandler(playerScore) {
 
 playerHand = [-4, 3, 3, -2];
 playerPool = [];
-const humanPlayer = new player("You", playerPool, playerHand);
+playerScore = 0;
+const humanPlayer = new player("You", playerPool, playerHand, playerScore);
 
 enemyHand = [2, 2, 4, -1];
 enemyPool = [1];
 
 
 const drawCardBtn = document.querySelector('#draw-card');
-drawCardBtn.addEventListener('click', humanPlayer.drawCards.bind(humanPlayer))
+drawCardBtn.addEventListener('click', humanPlayer.turn.bind(humanPlayer))
 
 const firstCardInHand = document.querySelector('#first-card');
 const secondCardInHand = document.querySelector('#second-card');
@@ -102,12 +103,16 @@ const thirdCardInHand = document.querySelector('#third-card');
 const fourthCardInHand = document.querySelector('#fourth-card');
 
 function useCard(hand, pool) {
+  if (!!hand[0]){
 console.log('Used card no.: ' + hand[0])
 pool.push(hand[0]);
 playerHand.splice(hand[0], 1, null);
 scoreKeeper();
+firstCardInHand.classList.add('blocked');}
+else {
+}
 }
 
 firstCardInHand.addEventListener('click', useCard.bind(null, playerHand, playerPool))
 standBtn = document.querySelector('#stand');
-standBtn.addEventListener('click', winHandler.bind(null, scoreKeeper))
+standBtn.addEventListener('click', humanPlayer.turn.bind(humanPlayer))
