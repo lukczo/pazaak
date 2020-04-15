@@ -1,5 +1,13 @@
-cardStack = [];
-offStack = [];
+///////////////////////////////
+/* VENDORS */
+const firstCardInHand = document.querySelector("#first-card");
+const secondCardInHand = document.querySelector("#second-card");
+const thirdCardInHand = document.querySelector("#third-card");
+const fourthCardInHand = document.querySelector("#fourth-card");
+const standBtn = document.querySelector("#stand");
+const drawCardBtn = document.querySelector("#draw-card");
+///////////////////////////////
+const _CARDSTACK = [];
 
 function tossCards() {
   stack = [];
@@ -9,17 +17,19 @@ function tossCards() {
   for (i = 2; i < dealtCards.length; ++i) {
     output = dealtCards.charAt(i);
     output === "0"
-      ? cardStack.push(parseInt(output) + 2)
+      ? _CARDSTACK.push(parseInt(output) + 2)
       : output === "1"
-      ? cardStack.push(parseInt(output + 1))
-      : cardStack.push(parseInt(output));
+      ? _CARDSTACK.push(parseInt(output + 1))
+      : _CARDSTACK.push(parseInt(output));
   }
 
-  console.log("--[LOG]---Current cardstack is:", cardStack);
-  return cardStack;
+  console.log("--[LOG]---Current cardstack is:", _CARDSTACK);
+  return _CARDSTACK;
 }
 
 tossCards();
+
+/* CLASS CONSTRUCTOR */ 
 
 class player {
   constructor(name, cardPool, hand, score) {
@@ -36,23 +46,23 @@ class player {
     /*     console.log(`--[LOG]---We have generated index number of: [${generatedIndex}]`); */
 
     if (
-      generatedIndex <= cardStack.length &&
-      cardStack[generatedIndex] !== null
+      generatedIndex <= _CARDSTACK.length &&
+      _CARDSTACK[generatedIndex] !== null
     ) {
       console.log(
-        `${this.name} have drawn card no.: ${cardStack[generatedIndex]}`
+        `${this.name} have drawn card no.: ${_CARDSTACK[generatedIndex]}`
       );
-      this.cardPool.push(cardStack[generatedIndex]);
-      cardStack.splice(generatedIndex, 1, null);
+      this.cardPool.push(_CARDSTACK[generatedIndex]);
+      _CARDSTACK.splice(generatedIndex, 1, null);
 
-      /*       console.log(`--[LOG]---Stack status: [${cardStack}]`); */
+      /*       console.log(`--[LOG]---Stack status: [${_CARDSTACK}]`); */
       console.log(`${this.name} card pool: ${this.cardPool}`);
       this.cardPool.length > 0
         ? this.scoreKeeper()
         : console.log("--[LOG]---Pool is empty");
     } else if (
-      generatedIndex > cardStack.length ||
-      cardStack[generatedIndex] === null
+      generatedIndex > _CARDSTACK.length ||
+      _CARDSTACK[generatedIndex] === null
     ) {
       check() === true
         ? console.log("--[LOG]---No more cards left")
@@ -100,12 +110,14 @@ class player {
   }
 }
 
+/* Minor functions */
+
 function check() {
-  return cardStack.every((currentValue) => currentValue === null);
+  return _CARDSTACK.every((currentValue) => currentValue === null);
 }
 
 function randomNumber() {
-  return Math.floor(Math.random() * cardStack.length);
+  return Math.floor(Math.random() * _CARDSTACK.length);
 }
 
 function multiPlayer() {
@@ -123,6 +135,8 @@ function aiBehavior() {
     aiPlayer.turn(aiPlayer);
   }
 }
+
+/* Players declarations */ 
 playerHand = [-4, 3, 3, -2];
 playerPool = [];
 playerScore = 0;
@@ -133,17 +147,10 @@ aiPool = [];
 aiScore = 0;
 const aiPlayer = new player("Opponent", aiPool, aiHand, aiScore);
 
-const drawCardBtn = document.querySelector("#draw-card");
+/* Event listeners */ 
 drawCardBtn.addEventListener("click", multiPlayer);
-
-const firstCardInHand = document.querySelector("#first-card");
-const secondCardInHand = document.querySelector("#second-card");
-const thirdCardInHand = document.querySelector("#third-card");
-const fourthCardInHand = document.querySelector("#fourth-card");
-
 firstCardInHand.addEventListener(
   "click",
   humanPlayer.useCard.bind(humanPlayer)
 );
-standBtn = document.querySelector("#stand");
 standBtn.addEventListener("click", aiPlayer.turn.bind(aiPlayer));

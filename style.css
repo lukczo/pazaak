@@ -81,12 +81,16 @@ button:hover {
 }
 
 .pazaak-card {
-    background-color: grey;
+    background-color: none;
+    border: 1px solid grey;
     width: 75px;
     height: 100px;
     margin: 10px;
     border-radius: 5px;
     
+}
+.pazaak-card-pool {
+    background-color: seagreen;
 }
 .pazaak-card {
     align-self: flex-end;
