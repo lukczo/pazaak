@@ -6,8 +6,9 @@
     <title>Pazaak</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
-
+<body class ="">
+<div id="modal" class="flex blocked"><h1>GAME OVER :)</h1> <p>Click here to play again</p> </div>
+<div id="backdrop" class="blocked"></div>
 <main class="flex">
     <div class="header flex">
         <div class="flex"><h1>Pazaak Table</h1></div>
@@ -27,13 +28,13 @@
         <ul>
             <li>Player</li>
             <li>
-                Score: <span id="scorePlayer"></span>
+                Score: <span class="scores" id="score-player"></span>
             </li>
         </ul>
     </div>
     </div>
     <div class="flex" id="player-pool">
-        <div class="pazaak-card flex pazaak-card-pool"><p>1</p></div>
+        <div class="pazaak-card flex"><p></p></div>
         <div class="pazaak-card flex"></div>
         <div class="pazaak-card flex"></div>
         <div class="pazaak-card flex"></div>
@@ -56,21 +57,21 @@
         <div class="playersHeader">
             <ul>
                 <li>Opponent</li>
-                <li>Score: <span id="scoreAI"></span></li>
+                <li>Score: <span class="scores" id="score-ai"></span></li>
             </ul>
         </div>
 
-        <div class="flex" id="player-pool">
+        <div class="flex" id="ai-pool">
             <div class="pazaak-card flex"><p></p></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
-            <div class="pazaak-card flex"></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
+            <div class="pazaak-card flex"><p></p></div>
         </div>
         <div class="flex">
             <div class="pazaak-card hand flex" id="first-card"><p></p></div>

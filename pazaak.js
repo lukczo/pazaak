@@ -4,8 +4,19 @@ const firstCardInHand = document.querySelector("#first-card");
 const secondCardInHand = document.querySelector("#second-card");
 const thirdCardInHand = document.querySelector("#third-card");
 const fourthCardInHand = document.querySelector("#fourth-card");
+
 const standBtn = document.querySelector("#stand");
 const drawCardBtn = document.querySelector("#draw-card");
+
+const playerScorePlace = document.querySelector("#score-player");
+const aiScorePlace = document.querySelector("#score-ai")
+
+const playerPoolCards = document.querySelector("#player-pool").querySelectorAll('.pazaak-card');
+const aiPoolCards = document.querySelector("#ai-pool").querySelectorAll('.pazaak-card');
+
+const modal = document.querySelector('#modal')
+const backdrop = document.querySelector("#backdrop")
+const modalP = modal.getElementsByTagName('p')[0]
 ///////////////////////////////
 const _CARDSTACK = [];
 
@@ -52,14 +63,18 @@ class player {
       console.log(
         `${this.name} have drawn card no.: ${_CARDSTACK[generatedIndex]}`
       );
+      
+      
       this.cardPool.push(_CARDSTACK[generatedIndex]);
       _CARDSTACK.splice(generatedIndex, 1, null);
-
       /*       console.log(`--[LOG]---Stack status: [${_CARDSTACK}]`); */
       console.log(`${this.name} card pool: ${this.cardPool}`);
       this.cardPool.length > 0
         ? this.scoreKeeper()
         : console.log("--[LOG]---Pool is empty");
+
+        outputPool(this.name)
+
     } else if (
       generatedIndex > _CARDSTACK.length ||
       _CARDSTACK[generatedIndex] === null
@@ -85,16 +100,19 @@ class player {
     this.score = this.cardPool.reduce((acc, curVal) => {
       return acc + curVal;
     });
+    outputScore(this.name, this.score);
     console.log(`${this.name} SCORE: ..::${this.score}::..`);
   }
   winHandler() {
     humanPlayer.score === aiPlayer.score
       ? console.log("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
       : this.score > 20
-      ? console.log(`_^_^_^_^_^_${this.name} has lost_^_^_^_^_^_`)
+      ? console.log(`_^_^_^_^_^_${this.name} has lost_^_^_^_^_^_`) 
       : this.score === 20
-      ? console.log(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`)
+      ? console.log(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`) 
       : console.log(`--[LOG]---Keep playing`);
+
+      modalToggler()
   }
 
   useCard() {
@@ -135,7 +153,50 @@ function aiBehavior() {
     aiPlayer.turn(aiPlayer);
   }
 }
+function outputScore(name, score) {
+  if (name === humanPlayer.name) {
+    playerScorePlace.innerHTML = score;
+  }
+  else {
+    aiScorePlace.innerHTML = score;
+  }
+}
 
+function outputPool(player){
+
+  if (player === humanPlayer.name){
+    arrPlayerPoolCards = Array.from(playerPoolCards);
+    for (const [index, card] of humanPlayer.cardPool.entries()) {
+      arrPlayerPoolCards[index].innerHTML = card; 
+      arrPlayerPoolCards[index].classList.add('pazaak-card-pool')
+    }
+  } else {
+    arrAiPoolCards = Array.from(aiPoolCards);
+    for (const [index, card] of aiPlayer.cardPool.entries()) {
+      arrAiPoolCards[index].innerHTML = card; 
+      arrAiPoolCards[index].classList.add('pazaak-card-pool')
+  }
+}
+}
+
+function modalToggler(){
+  modal.classList.toggle('blocked');
+  backdrop.classList.toggle('blocked');
+  document.body.classList.toggle('overflow');
+  modal.addEventListener('click', modalToggler);
+  backdrop.addEventListener('click', modalToggler);
+/*   modalP.addEventListener('click', ()=>
+  {
+    _CARDSTACK = [],
+    playerPool = [];
+    playerScore = 0;
+    aiPool = [];
+    aiScore = 0;
+    tossCards;
+    modalToggler
+  }
+  ) */
+}
 /* Players declarations */ 
 playerHand = [-4, 3, 3, -2];
 playerPool = [];
