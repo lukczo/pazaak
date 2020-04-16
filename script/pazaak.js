@@ -1,12 +1,11 @@
 ///////////////////////////////
 /* VENDORS */
-const firstCardInHand = document.querySelector("#first-card");
-const secondCardInHand = document.querySelector("#second-card");
-const thirdCardInHand = document.querySelector("#third-card");
-const fourthCardInHand = document.querySelector("#fourth-card");
-
+const startBtn = document.querySelector('#start')
+const resetBtn = document.querySelector('#reset');
 const standBtn = document.querySelector("#stand");
 const drawCardBtn = document.querySelector("#draw-card");
+
+const playerHandDeck = document.querySelector('.player').lastElementChild;
 
 const playerScorePlace = document.querySelector("#score-player");
 const aiScorePlace = document.querySelector("#score-ai")
@@ -18,8 +17,15 @@ const modal = document.querySelector('#modal');
 const backdrop = document.querySelector("#backdrop");
 const modalP = modal.getElementsByTagName('p')[0];
 const pickHandDeckBtn = document.querySelector("#pick-handdeck");
+const pazaakTitle = document.querySelector('.header').firstElementChild;
+
+const clickAudio = new Audio ('./assets/click.mp3')
 ///////////////////////////////
 const _CARDSTACK = [];
+function clickSound() {
+  clickAudio.play();
+}
+
 
 ///////////////////////////////
 function tossCards() {
@@ -124,7 +130,8 @@ class player {
       this.cardPool.push(this.hand[num]);
       this.hand.splice(this.hand[num], 1, null);
       this.scoreKeeper();
-      firstCardInHand.classList.add("blocked");
+      resetCardStyle(playerHandDeck.children[num]);
+      playerHandDeck.children[num].innerHTML = null;
       aiBehavior();
     } else {
     }
@@ -134,49 +141,36 @@ class player {
 
 ///////////////////////////////
 /* Players declarations */ 
-playerHand = [];
-playerPool = [];
-playerScore = 0;
-const humanPlayer = new player("Ukwial", playerPool, playerHand, playerScore);
-
-aiHand = [2, 2, 4, -1];
-aiPool = [];
-aiScore = 0;
-const aiPlayer = new player("Opponent", aiPool, aiHand, aiScore);
+const humanPlayer = new player("Ukwial", new Array, new Array, 0);
+const aiPlayer = new player("Opponent", new Array, new Array, 0);
+///////////////////////////////
 
 function renderCards() {
-a = randomNumber() * randomOperator();
-b = randomNumber() * randomOperator();
-c = randomNumber() * randomOperator();
-d = randomNumber() * randomOperator();
+    humanPlayer.hand.length = 0
+    handdeck = Array.from(playerHandDeck.children);
+    for (const [index, cards] of handdeck.entries()){
+      random = randomNumber() * randomOperator()
+      cards.innerHTML = random;
+      humanPlayer.hand.push(random);
+      resetCardStyle(cards);
+      random > 0 ? cards.classList.add('plus-card') : cards.classList.add('minus-card')
+      cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index));
 
-  firstCardInHand.innerHTML =  a;
-  secondCardInHand.innerHTML = b;
-  thirdCardInHand.innerHTML =  c;
-  fourthCardInHand.innerHTML = d;
+    }
 
-  humanPlayer.hand.push(a,b,c,d);
-  
-  firstCardInHand.addEventListener(
-    "click",
-    humanPlayer.useCard.bind(humanPlayer, a)
-  );
-  secondCardInHand.addEventListener(
-    "click",
-    humanPlayer.useCard.bind(humanPlayer, b)
-  );
-  thirdCardInHand.addEventListener(
-    "click",
-    humanPlayer.useCard.bind(humanPlayer, c)
-  );
-  fourthCardInHand.addEventListener(
-    "click",
-    humanPlayer.useCard.bind(humanPlayer, d)
-  );
+
+}
+
+playerHandDeck.children[0].addEventListener("click", humanPlayer.useCard.bind(humanPlayer, 0));
+
+
+function resetCardStyle (element) {
+  element.classList.remove('plus-card');
+  element.classList.remove('minus-card');
+  element.classList.remove('pazaak-card-pool');
 }
 
 pickHandDeckBtn.addEventListener('click', renderCards)
-renderCards();
 ///////////////////////////////
 /* Minor functions */
 
@@ -199,9 +193,11 @@ function randomOperator() {
     : console.log("error drawing operator");
 }
 
-function multiPlayer() {
+function multiPlayer() {  
+  clickSound();
   humanPlayer.turn(humanPlayer);
-  aiBehavior();
+  setTimeout(aiBehavior, 1000);
+  setTimeout(clickSound, 1000);
 }
 
 function aiBehavior() {
@@ -246,20 +242,65 @@ function modalToggler(){
   document.body.classList.toggle('overflow');
   modal.addEventListener('click', modalToggler);
   backdrop.addEventListener('click', modalToggler);
-/*   modalP.addEventListener('click', ()=>
-  {
-    _CARDSTACK = [],
-    playerPool = [];
-    playerScore = 0;
-    aiPool = [];
-    aiScore = 0;
-    tossCards;
-    modalToggler
+}
+
+function reset() {
+  console.log('Game was reset')
+  _CARDSTACK.length = 0;
+  humanPlayer.cardPool.length = 0;
+  humanPlayer.hand.length = 0;
+  humanPlayer.score = 0;
+  aiPlayer.cardPool.length = 0;
+  aiPlayer.hand.length = 0;
+  aiPlayer.score = 0;
+  outputScore(humanPlayer.name, 0);
+  outputScore(aiPlayer.name, 0);
+
+  handCards = Array.from(playerHandDeck.children);
+
+  for (const cards of handCards){
+    resetCardStyle(cards);
+    cards.innerHTML = null;
   }
-  ) */
+
+  playerPool = Array.from(playerPoolCards);
+  for (const cards of playerPool){
+    resetCardStyle(cards);
+    cards.innerHTML = null;
+  }
+  aiPool = Array.from(aiPoolCards);
+  for (const cards of aiPool){
+    resetCardStyle(cards);
+    cards.innerHTML = null;
+  }
+  tossCards();
+}
+
+function start() {
+
+  if (humanPlayer.hand.length > 0) {
+
+
+  multiPlayer();
+  clickSound();
+  pickHandDeckBtn.classList.toggle('unclickable');
+  drawCardBtn.classList.toggle('unclickable');
+  standBtn.classList.toggle('unclickable');
+  startBtn.classList.toggle('unclickable');
+  resetBtn.classList.toggle('unclickable');
+  startBtn.removeEventListener('click', start);  
+  drawCardBtn.removeEventListener('click', start);
+} else {
+  alert('Please choose your cards first');
+}
 }
 ///////////////////////////////
 /* Event listeners */ 
 drawCardBtn.addEventListener("click", multiPlayer);
-
+startBtn.addEventListener("click", start)
 standBtn.addEventListener("click", aiPlayer.turn.bind(aiPlayer));
+resetBtn.addEventListener("click", reset)
+pazaakTitle.addEventListener("click", () => {
+  location.reload();
+return false;
+})

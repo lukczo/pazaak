@@ -17,12 +17,16 @@ hr{display:block;height:1px;border:0;border-top:1px solid #ccc;margin:1em 0;padd
 input,select{vertical-align:middle}
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: SF Distant Galaxy Outline, Arial, Helvetica, sans-serif;
     background-color: rgb(24, 26, 26);
     color: white;
     font-size: 1.2rem;
 }
 
+::selection {
+    background-color: seagreen;
+    color: white;
+}
 .flex {
     display: flex;
     justify-content: center;
@@ -35,6 +39,7 @@ body {
     min-height: 600px;
     background-color: rgb(67, 87, 87);
     margin: 10px;
+    border-radius: 5px;
 }
 
 .ai {
@@ -42,6 +47,7 @@ body {
     min-height: 600px;
     background-color: rgb(128, 82, 82);
     margin: 10px;
+    border-radius: 5px;
 }
 
 li {
@@ -53,17 +59,21 @@ li {
 }
 
 .header {
-    width: 500px;
+    width: 200px;
     min-height: 600px;
     color: seagreen;
     flex-direction: column;
-    background-color: rgb(54, 54, 54);
     margin: 10px;
+    border-radius: 5px;
 }
 
 .header h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
     margin: 15px;
+}
+
+.header h1:hover {
+    cursor: pointer;
 }
 
 button {
@@ -80,6 +90,15 @@ button:hover {
     cursor: pointer;
 }
 
+.unclickable {
+    background-color: darkslategrey;
+    color: dimgrey;
+}
+
+.unclickable:hover {    
+    cursor: no-drop !important;
+    background-color: darkslategrey;
+}
 .pazaak-card {
     border: 1px solid grey;
     width: 125px;
@@ -98,14 +117,22 @@ button:hover {
     font-weight: bold;
 }
 .hand {
-    background-color: seagreen;
     width: 100px;
     height: 125px; 
 }
 
-.pazaak-card:hover {
+.plus-card {
+    background-color: slateblue;
+}
+
+.minus-card {
+    background-color: tomato;
+}
+
+.pazaak-card-pool:hover, .plus-card:hover, .minus-card:hover {
     transform: scale(1.1);
-    background-color: springgreen;
+    border-color: springgreen;
+    border-width: 2px;
     cursor: pointer;
 }
 
@@ -118,7 +145,7 @@ button:hover {
 
 .scores {
     font-size: 3rem;
-    color: red;
+    color: rgb(214, 179, 63);
 }
 
 #modal {
