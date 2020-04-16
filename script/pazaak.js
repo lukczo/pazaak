@@ -132,6 +132,7 @@ class player {
       this.scoreKeeper();
       resetCardStyle(playerHandDeck.children[num]);
       playerHandDeck.children[num].innerHTML = null;
+
       aiBehavior();
     } else {
     }
@@ -153,8 +154,8 @@ function renderCards() {
       cards.innerHTML = random;
       humanPlayer.hand.push(random);
       resetCardStyle(cards);
-      random > 0 ? cards.classList.add('plus-card') : cards.classList.add('minus-card')
-      cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index));
+      random > 0 ? cards.classList.add('plus-card') : cards.classList.add('minus-card');
+      cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index), false);
 
     }
 
@@ -245,19 +246,19 @@ function modalToggler(){
 }
 
 function reset() {
-  console.log('Game was reset')
   _CARDSTACK.length = 0;
+
   humanPlayer.cardPool.length = 0;
   humanPlayer.hand.length = 0;
   humanPlayer.score = 0;
   aiPlayer.cardPool.length = 0;
   aiPlayer.hand.length = 0;
   aiPlayer.score = 0;
+
   outputScore(humanPlayer.name, 0);
   outputScore(aiPlayer.name, 0);
 
   handCards = Array.from(playerHandDeck.children);
-
   for (const cards of handCards){
     resetCardStyle(cards);
     cards.innerHTML = null;
@@ -268,12 +269,16 @@ function reset() {
     resetCardStyle(cards);
     cards.innerHTML = null;
   }
+
   aiPool = Array.from(aiPoolCards);
   for (const cards of aiPool){
     resetCardStyle(cards);
     cards.innerHTML = null;
   }
+
   tossCards();
+
+  console.log('Game was reset')
 }
 
 function start() {

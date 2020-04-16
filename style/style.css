@@ -150,9 +150,9 @@ button:hover {
 
 #modal {
     height: 300px;
-    width: 98vw;
-    top: 30vh;
-    left: 1vw;
+    width: 300px;
+    top: 25vh; 
+    left: 25vw;
     background-color: lemonchiffon;
     color: seagreen;
     position: absolute;
@@ -161,6 +161,7 @@ button:hover {
     align-self: center;
     align-items: center;
     flex-direction: column;
+    
 }
 #modal p {
     color: darkslategray;
