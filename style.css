@@ -32,14 +32,14 @@ body {
 }
 .player {
     width: 500px;
-    height: 600px;
+    min-height: 600px;
     background-color: rgb(67, 87, 87);
     margin: 10px;
 }
 
 .ai {
     width: 500px;
-    height: 600px;
+    min-height: 600px;
     background-color: rgb(128, 82, 82);
     margin: 10px;
 }
@@ -54,7 +54,7 @@ li {
 
 .header {
     width: 500px;
-    height: 600px;
+    min-height: 600px;
     color: seagreen;
     flex-direction: column;
     background-color: rgb(54, 54, 54);
@@ -82,8 +82,8 @@ button:hover {
 
 .pazaak-card {
     border: 1px solid grey;
-    width: 75px;
-    height: 100px;
+    width: 125px;
+    height: 150px;
     margin: 10px;
     border-radius: 5px;
     
@@ -99,6 +99,8 @@ button:hover {
 }
 .hand {
     background-color: seagreen;
+    width: 100px;
+    height: 125px; 
 }
 
 .pazaak-card:hover {

@@ -14,12 +14,14 @@ const aiScorePlace = document.querySelector("#score-ai")
 const playerPoolCards = document.querySelector("#player-pool").querySelectorAll('.pazaak-card');
 const aiPoolCards = document.querySelector("#ai-pool").querySelectorAll('.pazaak-card');
 
-const modal = document.querySelector('#modal')
-const backdrop = document.querySelector("#backdrop")
-const modalP = modal.getElementsByTagName('p')[0]
+const modal = document.querySelector('#modal');
+const backdrop = document.querySelector("#backdrop");
+const modalP = modal.getElementsByTagName('p')[0];
+const pickHandDeckBtn = document.querySelector("#pick-handdeck");
 ///////////////////////////////
 const _CARDSTACK = [];
 
+///////////////////////////////
 function tossCards() {
   stack = [];
   dealtCards = Math.random();
@@ -40,6 +42,7 @@ function tossCards() {
 
 tossCards();
 
+///////////////////////////////
 /* CLASS CONSTRUCTOR */ 
 
 class player {
@@ -115,11 +118,11 @@ class player {
       modalToggler()
   }
 
-  useCard() {
-    if (!!this.hand[0]) {
-      console.log(`${this.name} used card no.: ${this.hand[0]}`);
-      this.cardPool.push(this.hand[0]);
-      this.hand.splice(this.hand[0], 1, null);
+  useCard(num) {
+    if (!!this.hand[num]) {
+      console.log(`${this.name} used card no.: ${this.hand[num]}`);
+      this.cardPool.push(this.hand[num]);
+      this.hand.splice(this.hand[num], 1, null);
       this.scoreKeeper();
       firstCardInHand.classList.add("blocked");
       aiBehavior();
@@ -128,6 +131,53 @@ class player {
   }
 }
 
+
+///////////////////////////////
+/* Players declarations */ 
+playerHand = [];
+playerPool = [];
+playerScore = 0;
+const humanPlayer = new player("Ukwial", playerPool, playerHand, playerScore);
+
+aiHand = [2, 2, 4, -1];
+aiPool = [];
+aiScore = 0;
+const aiPlayer = new player("Opponent", aiPool, aiHand, aiScore);
+
+function renderCards() {
+a = randomNumber() * randomOperator();
+b = randomNumber() * randomOperator();
+c = randomNumber() * randomOperator();
+d = randomNumber() * randomOperator();
+
+  firstCardInHand.innerHTML =  a;
+  secondCardInHand.innerHTML = b;
+  thirdCardInHand.innerHTML =  c;
+  fourthCardInHand.innerHTML = d;
+
+  humanPlayer.hand.push(a,b,c,d);
+  
+  firstCardInHand.addEventListener(
+    "click",
+    humanPlayer.useCard.bind(humanPlayer, a)
+  );
+  secondCardInHand.addEventListener(
+    "click",
+    humanPlayer.useCard.bind(humanPlayer, b)
+  );
+  thirdCardInHand.addEventListener(
+    "click",
+    humanPlayer.useCard.bind(humanPlayer, c)
+  );
+  fourthCardInHand.addEventListener(
+    "click",
+    humanPlayer.useCard.bind(humanPlayer, d)
+  );
+}
+
+pickHandDeckBtn.addEventListener('click', renderCards)
+renderCards();
+///////////////////////////////
 /* Minor functions */
 
 function check() {
@@ -135,7 +185,18 @@ function check() {
 }
 
 function randomNumber() {
-  return Math.floor(Math.random() * _CARDSTACK.length);
+  random = Math.floor(Math.random() * _CARDSTACK.length);
+  random > 0 && random <= 10 ? random : randomNumber();
+  return random
+}
+
+function randomOperator() {
+  random = randomNumber();
+  return random <= 5
+    ? 1
+    : random > 5
+    ? -1
+    : console.log("error drawing operator");
 }
 
 function multiPlayer() {
@@ -197,21 +258,8 @@ function modalToggler(){
   }
   ) */
 }
-/* Players declarations */ 
-playerHand = [-4, 3, 3, -2];
-playerPool = [];
-playerScore = 0;
-const humanPlayer = new player("Ukwial", playerPool, playerHand, playerScore);
-
-aiHand = [2, 2, 4, -1];
-aiPool = [];
-aiScore = 0;
-const aiPlayer = new player("Opponent", aiPool, aiHand, aiScore);
-
+///////////////////////////////
 /* Event listeners */ 
 drawCardBtn.addEventListener("click", multiPlayer);
-firstCardInHand.addEventListener(
-  "click",
-  humanPlayer.useCard.bind(humanPlayer)
-);
+
 standBtn.addEventListener("click", aiPlayer.turn.bind(aiPlayer));
