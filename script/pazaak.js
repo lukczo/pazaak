@@ -20,7 +20,7 @@ function createCardObjects(type, value) {
   cardName = value > 0 ? `+${value}` : `${value}`;
 
   if (type === stackCard) {
-    return cardName = new card(value, type, value, stackCardColor);
+    return cardName = new card(value.toString(), type, value, stackCardColor);
           
   } else if (type === playerCard) {
     return cardName === `+${value}`
@@ -60,9 +60,6 @@ class player {
       this.cardPool.push(createdCardObject);
       _CARDSTACK.splice(generatedIndex, 1, null);
       
-      /*       console.log(`--[LOG]---Stack status: [${_CARDSTACK}]`); */
-      console.log(`${this.name} card pool: ${this.cardPool}`);
-
       this.cardPool.length > 0
         ? this.scoreKeeper()
         : console.log("--[LOG]---Pool is empty");
@@ -98,7 +95,7 @@ class player {
     }
 
     this.score = cardPoolValues.reduce((acc, curVal) => {
-      return acc + curVal;
+      return (acc + curVal) < 0 ? 0 : acc + curVal;
     });
 
 
@@ -118,12 +115,15 @@ class player {
       modalToggler()
   }
 
-  useCard(num, cardColor) {
-    if (!!this.hand[num]) {
-      console.log(`${this.name} used card no.: ${this.hand[num]}`);
+  useCard(num) {
+    if (this.hand[num] != null) {
+      console.log(`${this.name} used card no.: ${this.hand[num].value}`);
+
       this.cardPool.push(this.hand[num]);
-      this.hand.splice(this.hand[num], 1, null);
+      this.hand.splice(num, 1, null);
+      
       this.scoreKeeper();
+
       resetCardStyle(playerHandDeck.children[num]);
       playerHandDeck.children[num].innerHTML = null;    
       outputPool(this.name); 

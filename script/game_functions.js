@@ -40,6 +40,7 @@ function tossCards() {
       aiPlayer.turn(aiPlayer);
     }
   }
+  
   function outputScore(name, score) {
     if (name === humanPlayer.name) {
       playerScorePlace.innerHTML = score;

@@ -20,17 +20,20 @@ function outputPool(player){
       humanPlayer.hand.length = 0
       handdeck = Array.from(playerHandDeck.children);
       for (const [index, cards] of handdeck.entries()){
+        cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index), { once: true});
+
+        console.log(index, cards);
         random = randomNumber() * randomOperator();
   
         createdCardObject = createCardObjects(playerCard, random);
         cards.innerHTML = createdCardObject.name;
+        console.log(index, cards.innerHTML);
         humanPlayer.hand.push(createdCardObject);
   
         resetCardStyle(cards);
   
        cards.classList.add(createdCardObject.color);
   
-        cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index, createdCardObject.color), { once: true});
       }
   }
   
