@@ -13,6 +13,8 @@ class card {
 const stackCardColor = 'pazaak-card-pool';
 const plusCardColor = 'plus-card';
 const minusCardColor ='minus-card';
+const aiHandCardcolor = 'ai-hand-card';
+
 const stackCard = 'StackCard';
 const playerCard = 'Players Card';
 
@@ -80,11 +82,14 @@ class player {
     }
   }
   turn() {
-    this.score < 20
-      ? this.drawCards()
-      : this.score >= 20
-      ? this.winHandler()
-      : console.log("Error");
+
+if (this.score < 20) {
+  this.drawCards()
+} else if (humanPlayer.score <= 20 && aiPlayer.score < 20){
+  aiPlayer.drawCards();
+} else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
+  this.winHandler();
+}
   }
 
   scoreKeeper() {
@@ -112,7 +117,7 @@ class player {
       ? console.log(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`) 
       : console.log(`--[LOG]---Keep playing`);
 
-      modalToggler()
+      /* modalToggler() */
   }
 
   useCard(num) {
@@ -130,9 +135,35 @@ class player {
       setTimeout(aiBehavior, 1000);
     } else {
     }
+    humanPlayer.winHandler()
   }
-}
-///////////////////////////////
+
+/*   renderCards(){
+    humanPlayer.hand.length = 0;
+    aiPlayer.hand.length = 0;
+
+    let handdeck, createdCardObject;
+    this.name === humanPlayer.name
+    ? handdeck = Array.from(playerHandDeck.children)
+    : handdeck = aiHanddeck = Array.from(aiHandDeck.children);
+
+    for (const [index, cards] of handdeck.entries()){
+      random = randomNumber() * randomOperator();  
+      createdCardObject = createCardObjects(playerCard, random);
+      
+      if(this.name === humanPlayer.name) {      
+        cards.innerHTML = createdCardObject.name
+        resetCardStyle(cards);  
+        cards.classList.add(createdCardObject.color);
+        cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index), { once: true});
+      } else {
+        cards.classList.add(aiHandCardcolor);
+      }
+      this.hand.push(createdCardObject);  
+  }
+}*/
+} 
+/////////////////////////////////
 /* Players declarations */ 
 const humanPlayer = new player("Ukwial", new Array, new Array, 0);
 const aiPlayer = new player("Opponent", new Array, new Array, 0);

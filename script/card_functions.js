@@ -20,23 +20,39 @@ function outputPool(player){
       humanPlayer.hand.length = 0
       handdeck = Array.from(playerHandDeck.children);
       for (const [index, cards] of handdeck.entries()){
-        cards.addEventListener("click", humanPlayer.useCard.bind(humanPlayer, index), { once: true});
+        random = randomNumber() * randomOperator();  
 
-        console.log(index, cards);
-        random = randomNumber() * randomOperator();
-  
         createdCardObject = createCardObjects(playerCard, random);
         cards.innerHTML = createdCardObject.name;
-        console.log(index, cards.innerHTML);
-        humanPlayer.hand.push(createdCardObject);
-  
-        resetCardStyle(cards);
-  
-       cards.classList.add(createdCardObject.color);
-  
+        humanPlayer.hand.push(createdCardObject);  
+
+        resetCardStyle(cards);  
+        cards.classList.add(createdCardObject.color);
       }
+      
+      aiPlayer.hand.length = 0;
+      aiHanddeck = Array.from(aiHandDeck.children);
+      for (const cards of aiHanddeck){
+        random = randomNumber() * randomOperator();  
+
+        createdCardObject = createCardObjects(playerCard, random);
+        aiPlayer.hand.push(createdCardObject);  
+
+        resetCardStyle(cards);  
+        cards.classList.add(aiHandCardcolor);
+      }      
   }
-  
+  function renderCardsBtns(onOff) {
+    handdeck = Array.from(playerHandDeck.children);
+     
+    for (const [index, cards] of handdeck.entries()){
+      boundfunction = humanPlayer.useCard.bind(humanPlayer, index);
+      if (onOff === 'reset'){      
+        cards.removeEventListener("click", boundfunction, { once: true});
+    } else {
+        cards.addEventListener("click", boundfunction, { once: true});
+    }}
+  }
   function removeCard(num) {
     return playerHandDeck.children[num].removeEventListener("click", humanPlayer.useCard.bind(humanPlayer, num));
   

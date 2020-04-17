@@ -128,7 +128,9 @@ button:hover {
 .minus-card {
     background-color: tomato;
 }
-
+.ai-hand-card {
+    background-color: dimgrey;
+}
 .pazaak-card-pool:hover, .plus-card:hover, .minus-card:hover {
     transform: scale(1.1);
     border-color: springgreen;

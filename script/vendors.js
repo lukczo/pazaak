@@ -6,6 +6,7 @@ const standBtn = document.querySelector("#stand");
 const drawCardBtn = document.querySelector("#draw-card");
 
 const playerHandDeck = document.querySelector('.player').lastElementChild;
+const aiHandDeck = document.querySelector('.ai').lastElementChild;
 
 const playerScorePlace = document.querySelector("#score-player");
 const aiScorePlace = document.querySelector("#score-ai")

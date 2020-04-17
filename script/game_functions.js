@@ -10,7 +10,7 @@ function tossCards() {
       output === "0"
         ? _CARDSTACK.push(parseInt(output) + 2)
         : output === "1"
-        ? _CARDSTACK.push(parseInt(output + 1))
+        ? _CARDSTACK.push(parseInt(output) + 1)
         : _CARDSTACK.push(parseInt(output));
     }
   
@@ -32,11 +32,12 @@ function tossCards() {
   
   function aiBehavior() {
     if ((aiPlayer.score === 18 && !aiPlayer.hand[0]) || aiPlayer.score === 19) {
-      console.log("AI stand the game");
+      aiPlayer.turn(aiPlayer);
     } else if (humanPlayer.score >= 20) {
-    } else if (aiPlayer.score === 18) {
-      aiPlayer.useCard();
-    } else {
+  
+    } else if (aiPlayer.score === 20){
+      winHandler(); 
+    }else {
       aiPlayer.turn(aiPlayer);
     }
   }
@@ -54,7 +55,8 @@ function tossCards() {
     if (humanPlayer.hand.length > 0) {
       multiPlayer();
       clickSound();
-      toggleGameButtons()
+      toggleGameButtons();
+      renderCardsBtns()
 
       startBtn.removeEventListener('click', start);  
       drawCardBtn.addEventListener("click", multiPlayer);
@@ -78,6 +80,7 @@ function tossCards() {
   
     outputScore(humanPlayer.name, 0);
     outputScore(aiPlayer.name, 0);
+    renderCardsBtns('reset');
   
     handCards = Array.from(playerHandDeck.children);
     for (const cards of handCards){
@@ -97,11 +100,11 @@ function tossCards() {
       cards.innerHTML = null;
     }
   
-    startBtn.addEventListener("click", start);    
-    pickHandDeckBtn.addEventListener('click', renderCards);    
+    startBtn.addEventListener("click", start);     
     resetBtn.removeEventListener("click", reset);      
     drawCardBtn.removeEventListener('click', multiPlayer);
     standBtn.removeEventListener("click", bindedToAiPlayer);
+    pickHandDeckBtn.addEventListener('click', renderCards);
 
     tossCards();
     toggleGameButtons();
