@@ -49,6 +49,22 @@ function tossCards() {
     }
   }
   
+  function start() {
+    if (humanPlayer.hand.length > 0) {
+      multiPlayer();
+      clickSound();
+      toggleGameButtons()
+
+      startBtn.removeEventListener('click', start);  
+      drawCardBtn.addEventListener("click", multiPlayer);
+      standBtn.addEventListener("click", bindedToAiPlayer);
+      resetBtn.addEventListener("click", reset);      
+      pickHandDeckBtn.removeEventListener('click', renderCards)
+  } else {
+    alert('Please choose your cards first');
+  }
+  }
+
   function reset() {
     _CARDSTACK.length = 0;
   
@@ -80,27 +96,17 @@ function tossCards() {
       cards.innerHTML = null;
     }
   
+    startBtn.addEventListener("click", start);    
+    pickHandDeckBtn.addEventListener('click', renderCards);    
+    resetBtn.removeEventListener("click", reset);      
+    drawCardBtn.removeEventListener('click', multiPlayer);
+    standBtn.removeEventListener("click", bindedToAiPlayer);
+
     tossCards();
+    toggleGameButtons();
   
     console.log('Game was reset')
   }
-  
-  function start() {
-    if (humanPlayer.hand.length > 0) {
-      multiPlayer();
-      clickSound();
-      pickHandDeckBtn.classList.toggle('unclickable');
-      drawCardBtn.classList.toggle('unclickable');
-      standBtn.classList.toggle('unclickable');
-      startBtn.classList.toggle('unclickable');
-      resetBtn.classList.toggle('unclickable');
-      startBtn.removeEventListener('click', start);  
-      drawCardBtn.removeEventListener('click', start);
-  } else {
-    alert('Please choose your cards first');
-  }
-  }
-
 ///////////////////////////////
 /* Function calls */ 
 tossCards();

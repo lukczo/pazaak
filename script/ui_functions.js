@@ -8,14 +8,20 @@ function modalToggler(){
     backdrop.addEventListener('click', modalToggler);
   }
 
+function toggleGameButtons() {
+  pickHandDeckBtn.classList.toggle('unclickable');
+  drawCardBtn.classList.toggle('unclickable');
+  standBtn.classList.toggle('unclickable');
+  startBtn.classList.toggle('unclickable');
+  resetBtn.classList.toggle('unclickable');
+}
 ///////////////////////////////
 /* Event listeners */ 
-drawCardBtn.addEventListener("click", multiPlayer);
 startBtn.addEventListener("click", start)
-standBtn.addEventListener("click", aiPlayer.turn.bind(aiPlayer));
 pickHandDeckBtn.addEventListener('click', renderCards)
-resetBtn.addEventListener("click", reset)
 pazaakTitle.addEventListener("click", () => {
   location.reload();
 return false;
 })
+
+const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer);
