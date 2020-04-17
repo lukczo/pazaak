@@ -82,15 +82,28 @@ class player {
     }
   }
   turn() {
-
-if (this.score < 20) {
-  this.drawCards()
-} else if (humanPlayer.score <= 20 && aiPlayer.score < 20){
-  aiPlayer.drawCards();
-} else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
-  this.winHandler();
-}
+    if ( humanPlayer.score < 20 && aiPlayer.score > 20) {
+      humanPlayer.winHandler(humanPlayer);
+    } else if (humanPlayer.score === 20 && aiPlayer.score < 20) {
+      aiPlayer.drawCards();
+    } else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
+      this.winHandler();
+    } else if (humanPlayer.score > 20 && aiPlayer.score < 20) {
+      aiPlayer.winHandler(aiPlayer);
+    } else if (humanPlayer.score > 20 && aiPlayer.score === 20) {
+      aiPlayer.winHandler(aiPlayer);
+    } else if (humanPlayer.score === 20 && aiPlayer.score > 20) {
+      humanPlayer.winHandler(humanPlayer);
+    }else if (humanPlayer.score < 20 && aiPlayer.score === 20){
+      humanPlayer.drawCards();
+    } else if (humanPlayer.score < 20 && aiPlayer.score < 20){
+      this.drawCards() 
+    } else {
+      console.log('turn error')
+    }
   }
+
+  
 
   scoreKeeper() {
   
@@ -108,16 +121,24 @@ if (this.score < 20) {
     outputScore(this.name, this.score);
     console.log(`${this.name} SCORE: ..::${this.score}::..`);
   }
-  winHandler() {
-    humanPlayer.score === aiPlayer.score
-      ? console.log("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
+  winHandler(win) {
+/*     humanPlayer.score === aiPlayer.score
+      ? alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
       : this.score > 20
-      ? console.log(`_^_^_^_^_^_${this.name} has lost_^_^_^_^_^_`) 
+      ? alert(`_^_^_^_^_^_${this.name} has lost_^_^_^_^_^_`) 
       : this.score === 20
-      ? console.log(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`) 
-      : console.log(`--[LOG]---Keep playing`);
+      ? alert(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`) 
+      : console.log(`--[LOG]---Keep playing`); */
 
-      /* modalToggler() */
+
+      humanPlayer.score === aiPlayer.score
+      ? alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
+      : win === (aiPlayer)
+      ? alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) + aiCardDom.classList.toggle('rotate-vert-center')
+      : win === (humanPlayer)
+      ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`) + playerCardDom.classList.toggle('rotate-vert-center') 
+      : console.log('--[LOG]--- win handler error');
+      
   }
 
   useCard(num) {

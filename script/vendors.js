@@ -5,8 +5,10 @@ const resetBtn = document.querySelector('#reset');
 const standBtn = document.querySelector("#stand");
 const drawCardBtn = document.querySelector("#draw-card");
 
-const playerHandDeck = document.querySelector('.player').lastElementChild;
-const aiHandDeck = document.querySelector('.ai').lastElementChild;
+const playerCardDom = document.querySelector('.player');
+const aiCardDom = document.querySelector('.ai');
+const playerHandDeck = playerCardDom.lastElementChild;
+const aiHandDeck = aiCardDom.lastElementChild;
 
 const playerScorePlace = document.querySelector("#score-player");
 const aiScorePlace = document.querySelector("#score-ai")

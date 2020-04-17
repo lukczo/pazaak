@@ -33,11 +33,7 @@ function tossCards() {
   function aiBehavior() {
     if ((aiPlayer.score === 18 && !aiPlayer.hand[0]) || aiPlayer.score === 19) {
       aiPlayer.turn(aiPlayer);
-    } else if (humanPlayer.score >= 20) {
-  
-    } else if (aiPlayer.score === 20){
-      winHandler(); 
-    }else {
+    } else {
       aiPlayer.turn(aiPlayer);
     }
   }
@@ -60,6 +56,7 @@ function tossCards() {
 
       startBtn.removeEventListener('click', start);  
       drawCardBtn.addEventListener("click", multiPlayer);
+      /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
       standBtn.addEventListener("click", bindedToAiPlayer);
       resetBtn.addEventListener("click", reset);      
       pickHandDeckBtn.removeEventListener('click', renderCards)
@@ -103,6 +100,7 @@ function tossCards() {
     startBtn.addEventListener("click", start);     
     resetBtn.removeEventListener("click", reset);      
     drawCardBtn.removeEventListener('click', multiPlayer);
+    /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
     standBtn.removeEventListener("click", bindedToAiPlayer);
     pickHandDeckBtn.addEventListener('click', renderCards);
 
