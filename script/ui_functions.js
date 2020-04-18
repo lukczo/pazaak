@@ -24,4 +24,4 @@ pazaakTitle.addEventListener("click", () => {
 return false;
 })
 
-const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer);
+const bindedToAiPlayer = aiPlayer.drawCards.bind(aiPlayer);

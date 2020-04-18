@@ -23,3 +23,4 @@ const pickHandDeckBtn = document.querySelector("#pick-handdeck");
 const pazaakTitle = document.querySelector('.header').firstElementChild;
 
 const clickAudio = new Audio ('./assets/click.mp3')
+

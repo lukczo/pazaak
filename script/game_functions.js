@@ -22,22 +22,44 @@ function tossCards() {
   function clickSound() {
     clickAudio.play();
   }
-  
+
+
+
+  function toggleBtnsWhenTurn() {
+    drawCardBtn.classList.toggle('unclickable');
+    standBtn.classList.toggle('unclickable');
+  }
+
+
+
   function multiPlayer() {  
     clickSound();
-    humanPlayer.turn(humanPlayer);
+    humanPlayer.drawCards(humanPlayer);
 
-    (humanPlayer.score < 20 && aiPlayer.score < 20)
-    || (humanPlayer.score === 20 && aiPlayer.score < 20)
-    || (humanPlayer.score > 20 && aiPlayer.score < 20)
-    || (humanPlayer.score > 20 && aiPlayer.score === 20)
-    ? setTimeout(aiBehavior, 1000)
-      + setTimeout(clickSound, 1000)
-    : console.log('--[LOG]-- AI Chosen "OTHER" option in multiplayer()');    
+    toggleBtnsWhenTurn();    
+    standBtn.removeEventListener("click", bindedToAiPlayer);
+    drawCardBtn.removeEventListener("click", multiPlayer);
+    
+    function aiHandler() {
+      aiBehavior();
+      clickSound();
+      toggleBtnsWhenTurn();
+      drawCardBtn.addEventListener("click", multiPlayer);
+      standBtn.addEventListener("click", bindedToAiPlayer)
+    }
+
+
+    (humanPlayer.score <= 20 && aiPlayer.score < 20)
+    || (humanPlayer.score >= 20 && aiPlayer.score <= 20)
+    ? setTimeout(aiHandler, 1000)
+    : console.log('--[LOG]-- AI no action taken')
+    + toggleBtnsWhenTurn()
+    + drawCardBtn.addEventListener("click", multiPlayer)
+    + standBtn.addEventListener("click", bindedToAiPlayer)
   }
   
   function aiBehavior() {    
-      stop !== 'stop' ? aiPlayer.turn(aiPlayer) : console.log('stopped');
+      stop !== 'stop' ? aiPlayer.drawCards(aiPlayer) : console.log('stopped');
   }
   
   function outputScore(name, score) {
