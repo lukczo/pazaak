@@ -110,8 +110,7 @@ button:hover {
     width: 125px;
     height: 150px;
     margin: 10px;
-    border-radius: 5px;
-    
+    border-radius: 5px;    
 }
 .pazaak-card-pool {
     background-color: rgb(214, 179, 63);
@@ -194,4 +193,37 @@ button:hover {
 .overflow {
     overflow-x: hidden;
     overflow-y: hidden;
+}
+
+@media only screen and (max-width: 700px) {
+    .player {
+        width: 500px;
+        min-height: 100px;
+    }
+    
+    .ai {
+        width: 500px;
+        min-height: 100px;
+    }
+    .header {
+        width: 200px;
+        min-height: 100px;
+    }
+    .hand {
+        width: 50px;
+        height: 75px;
+        font-size: 1.5rem !important;
+    }
+    .pazaak-card {
+        width: 50px;
+        height: 75px;
+        font-size: 2rem;
+    }
+    .playersHeader{
+        font-size: 1.5rem;
+    }
+    .scores {
+        font-size: 1.5rem;
+    }
+
 }
