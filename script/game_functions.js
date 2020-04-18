@@ -26,10 +26,14 @@ function tossCards() {
   function multiPlayer() {  
     clickSound();
     humanPlayer.turn(humanPlayer);
-    ( humanPlayer.score < 20 && aiPlayer.score < 20)
+
+    (humanPlayer.score < 20 && aiPlayer.score < 20)
+    || (humanPlayer.score === 20 && aiPlayer.score < 20)
+    || (humanPlayer.score > 20 && aiPlayer.score < 20)
+    || (humanPlayer.score > 20 && aiPlayer.score === 20)
     ? setTimeout(aiBehavior, 1000)
       + setTimeout(clickSound, 1000)
-    : console.log('stopped')    
+    : console.log('--[LOG]-- AI Chosen "OTHER" option in multiplayer()');    
   }
   
   function aiBehavior() {    
