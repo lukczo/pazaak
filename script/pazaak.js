@@ -45,13 +45,7 @@ class player {
 
   drawCards() {
     console.log("###########################");
-if( 
-  (humanPlayer.score <= 20 && aiPlayer.score <= 20)
-  || (humanPlayer.score === 20 && aiPlayer.score <= 20)
-  || (humanPlayer.score <= 20 && aiPlayer.score === 20)
-  || (humanPlayer.score <= 20 && aiPlayer.score >= 20) 
-  ){
-    let generatedIndex;
+        let generatedIndex;
     generatedIndex = randomNumber();
     /*     console.log(`--[LOG]---We have generated index number of: [${generatedIndex}]`); */
 
@@ -73,7 +67,8 @@ if(
         : console.log("--[LOG]---Pool is empty");
   
         outputPool(this.name, stackCard, createdCardObject.id)
-  
+        /* aiPlayer.drawCards(); */
+
     } else if (
       generatedIndex > _CARDSTACK.length ||
       _CARDSTACK[generatedIndex] === null
@@ -87,34 +82,7 @@ if(
     } else {
     }
     
-} else {
-  this.winHandler(this);
 }
-}
-/*   turn() {
-    if ( humanPlayer.score <= 20 && aiPlayer.score > 20) {
-      this.winHandler(humanPlayer);      
-    } else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
-      this.winHandler(humanPlayer);
-    } else if (humanPlayer.score > 20 && aiPlayer.score < 20) {
-      this.winHandler(aiPlayer);
-    } else if (humanPlayer.score > 20 && aiPlayer.score === 20) {
-      this.winHandler(aiPlayer);
-    } else if (aiPlayer.score > 20) {
-      this.winHandler(humanPlayer);
-    } else if (humanPlayer.score < 20 && aiPlayer.score === 20){
-      this.drawCards();
-    } else if (humanPlayer.score < 20 && aiPlayer.score < 20){
-      this.drawCards() 
-    } else if (humanPlayer.score === 20 && aiPlayer.score < 20) {
-      this.drawCards();
-    } else {
-      console.log('turn error')
-    }
-  } */
-
-  
-
   scoreKeeper() {
   
     const cardPoolValues = [];
@@ -132,15 +100,7 @@ if(
     console.log(`${this.name} SCORE: ..::${this.score}::..`);
   }
   winHandler(win) {
-/*     humanPlayer.score === aiPlayer.score
-      ? alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
-      : this.score > 20
-      ? alert(`_^_^_^_^_^_${this.name} has lost_^_^_^_^_^_`) 
-      : this.score === 20
-      ? alert(`_^_^_^_^_^_${this.name} has won_^_^_^_^_^_`) 
-      : console.log(`--[LOG]---Keep playing`); */
-
-      
+  
       (humanPlayer.score === 20 && aiPlayer.score === 20)
       && (humanPlayer.score === aiPlayer.score)
       ? alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
