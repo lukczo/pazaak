@@ -70,8 +70,11 @@ class player {
         outputPool(this.name, stackCard, createdCardObject.id)
         /* aiPlayer.drawCards(); */
 
+        tossCards();
+
+
     } else if (this.cardPool.length >= 6) {
-    this.winHandler(this);
+    gm.winHandler(gm);
     console.log('Card pool length bigger than 6')
     }else if (
       generatedIndex > _CARDSTACK.length ||
@@ -105,7 +108,21 @@ class player {
   }
 
   winHandler(win) {   
-    if(humanPlayer.score === 20 && aiPlayer.score === 20){
+
+    
+    drawCardBtn.classList.add('unclickable');
+    standBtn.classList.add('unclickable');
+    drawCardBtn.removeEventListener('click', multiPlayer);
+    standBtn.removeEventListener("click", bindedToAiPlayer);
+    resetBtn.innerHTML='Continue?';
+
+    if(win === gm ){
+      humanPlayer.score > aiPlayer.score 
+      ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`)
+      + playerCardDom.classList.toggle('rotate-vert-center')
+      : alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`)
+      + aiCardDom.classList.toggle('rotate-vert-center')
+      } else if(humanPlayer.score === 20 && aiPlayer.score === 20){
             alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
         } else if (win === aiPlayer){
           alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) ;
@@ -113,26 +130,9 @@ class player {
         } else if(win === humanPlayer){
           alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
           playerCardDom.classList.toggle('rotate-vert-center');
-        } else if(win === gm && humanPlayer.cardPool.length === 6 
-            && human.score !== 20
-            && aiPlayer.cardPool.length === 6
-            && aiPlayer.score !== 20 ){
-        humanPlayer.score > aiPlayer.score 
-        ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`)
-        + playerCardDom.classList.toggle('rotate-vert-center')
-        : alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`)
-        + aiCardDom.classList.toggle('rotate-vert-center')
         } else{
             console.log('winHandler issue')
         };
-    
-    
-        resetBtn.innerHTML='Continue?'
-        drawCardBtn.classList.toggle('unclickable');
-        standBtn.classList.toggle('unclickable');
-        drawCardBtn.removeEventListener('click', multiPlayer);
-        /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
-        standBtn.removeEventListener("click", bindedToAiPlayer);
     }
 
   useCard(num) {

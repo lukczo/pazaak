@@ -15,7 +15,7 @@ function tossCards() {
         : _CARDSTACK.push(parseInt(output));
     }
   
-    console.log("--[LOG]---Current cardstack is:", _CARDSTACK);
+    /* console.log("--[LOG]---Current cardstack is:", _CARDSTACK); */
     return _CARDSTACK;
   }
   
@@ -40,7 +40,11 @@ function tossCards() {
   }
 
   function multiPlayer(useCard) {
-      if (humanPlayer.score < 20 && aiPlayer.score < 20) {
+    if (
+      humanPlayer.cardPool.length === 6 && humanPlayer.score !== 20
+      || aiPlayer.cardPool.length === 6 && aiPlayer.score !== 20){
+        gm.winHandler(gm)
+      } else if (humanPlayer.score < 20 && aiPlayer.score < 20) {
         useCard === 'usedCard'
         ? setTimeout(aiHandler, 1000)
         : humanPlayer.drawCards(humanPlayer)
@@ -64,12 +68,7 @@ function tossCards() {
         humanPlayer.winHandler(humanPlayer);        
       } else if (humanPlayer.score > 20 && aiPlayer.score === 20){
         aiPlayer.winHandler(aiPlayer);
-      } else if (
-        humanPlayer.cardPool.length === 6 && human.score !== 20
-        || aiPlayer.cardPool.length === 6 && aiPlayer.score !== 20){
-          gm.winHandler(gm)
-        }
-        else {
+      } else {
         console.log("multiPlayer() win conditions error");
       }
     
