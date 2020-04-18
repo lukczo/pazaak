@@ -52,16 +52,17 @@ class player {
     if (
       generatedIndex <= _CARDSTACK.length &&
       _CARDSTACK[generatedIndex] !== null
+      && this.cardPool.length <= 5
     ) {
       console.log(
         `${this.name} have drawn card no.: ${_CARDSTACK[generatedIndex]}`
       );   
 
       let createdCardObject;
-      createdCardObject = createCardObjects(stackCard, _CARDSTACK[generatedIndex]);
+      createdCardObject = createCardObjects(stackCard, _CARDSTACK[generatedIndex]);      
+      _OFFSTACK.push(generatedIndex);
       this.cardPool.push(createdCardObject);
       _CARDSTACK.splice(generatedIndex, 1, null);
-      
       this.cardPool.length > 0
         ? this.scoreKeeper()
         : console.log("--[LOG]---Pool is empty");
@@ -69,12 +70,15 @@ class player {
         outputPool(this.name, stackCard, createdCardObject.id)
         /* aiPlayer.drawCards(); */
 
-    } else if (
+    } else if (this.cardPool.length >= 6) {
+    this.winHandler(this);
+    console.log('Card pool length bigger than 6')
+    }else if (
       generatedIndex > _CARDSTACK.length ||
       _CARDSTACK[generatedIndex] === null
     ) {
       check() === true
-        ? console.log("--[LOG]---No more cards left")
+        ? alert("--[LOG]---No more cards left")
         : this.drawCards() /*  +
           console.log(
             `--[LOG]---Generated index: ${generatedIndex} was unavailable, card was drawn again---[LOG]--`
@@ -99,26 +103,37 @@ class player {
     outputScore(this.name, this.score);
     console.log(`${this.name} SCORE: ..::${this.score}::..`);
   }
-  winHandler(win) {
-  
-      (humanPlayer.score === 20 && aiPlayer.score === 20)
-      && (humanPlayer.score === aiPlayer.score)
-      ? alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
-      : win === (aiPlayer)
-      ? alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`)
-        + aiCardDom.classList.toggle('rotate-vert-center')
-      : win === (humanPlayer)
-      ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`)
-        + playerCardDom.classList.toggle('rotate-vert-center') 
-      : console.log('--[LOG]--- win handler error');
 
-      resetBtn.innerHTML='Continue?'
-      drawCardBtn.classList.toggle('unclickable');
-      standBtn.classList.toggle('unclickable');
-      drawCardBtn.removeEventListener('click', multiPlayer);
-      /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
-      standBtn.removeEventListener("click", bindedToAiPlayer);
-  }
+  winHandler(win) { 
+
+    const aiWon = alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) 
+    + aiCardDom.classList.toggle('rotate-vert-center');
+    
+    const humanWon = alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`) + playerCardDom.classList.toggle('rotate-vert-center');
+    
+        if(humanPlayer.score === 20 && aiPlayer.score === 20){
+            alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
+        } else if (win === aiPlayer){
+            return aiWon;
+        } else if(win === humanPlayer){
+          return humanWon;
+        } else if(humanPlayer.cardPool.length === 6 
+            && human.score !== 20
+            && aiPlayer.cardPool.length === 6
+            && aiPlayer.score !== 20 ){
+        humanPlayer.score > aiPlayer.score ? playerWon : aiWon
+        } else{
+            console.log('winHandler issue')
+        };
+    
+    
+        resetBtn.innerHTML='Continue?'
+        drawCardBtn.classList.toggle('unclickable');
+        standBtn.classList.toggle('unclickable');
+        drawCardBtn.removeEventListener('click', multiPlayer);
+        /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
+        standBtn.removeEventListener("click", bindedToAiPlayer);
+    }
 
   useCard(num) {
     if (this.hand[num] != null) {
@@ -132,21 +147,22 @@ class player {
       resetCardStyle(playerHandDeck.children[num]);
       playerHandDeck.children[num].innerHTML = null;    
       outputPool(this.name); 
-      setTimeout(aiBehavior, 1000);
     } else {
     }
     if (this === humanPlayer){
-      (this.score === 20 && aiPlayer.score < 20)
+      (humanPlayer.score === 20 || humanPlayer.score < 20 && aiPlayer.score <= 20)
       ? multiPlayer('usedCard')
-      : this.score > 20
+      : humanPlayer.score > 20
       ? aiPlayer.winHandler(aiPlayer)
-      : console.log('usecard error');
+      : (humanPlayer.score < 20 && aiPlayer.score > 20)
+      ? humanPlayer.winHandler(humanPlayer)
+      : console.log('useCard() error first if section');
     } else if (this === aiPlayer){
-      (this.score === 20 && humanPlayer.score < 20)
+/*       (this.score === 20 && humanPlayer.score < 20)
       ? humanPlayer.drawCards(humanPlayer)
       : this.score > 20
       ? humanPlayer.winHandler(humanPlayer)
-      : humanPlayer.drawCards(humanPlayer);
+      : humanPlayer.drawCards(humanPlayer); */
     }else {
       console.log('useCard() error');
     }

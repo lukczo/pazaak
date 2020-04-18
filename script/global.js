@@ -1,6 +1,7 @@
 ///////////////////////////////
 /* GLOBAL VARIABLES */
 const _CARDSTACK = [];
+const _OFFSTACK = [];
 
 ///////////////////////////////
 /* GLOBAL FUNCTIONS */

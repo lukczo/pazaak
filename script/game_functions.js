@@ -2,9 +2,10 @@
 /* GAME FUNCTIONS */ 
 function tossCards() {
     stack = [];
+
     dealtCards = Math.random();
     dealtCards = dealtCards.toString();
-  
+
     for (i = 2; i < dealtCards.length; ++i) {
       output = dealtCards.charAt(i);
       output === "0"
@@ -44,25 +45,41 @@ function tossCards() {
         ? setTimeout(aiHandler, 1000)
         : humanPlayer.drawCards(humanPlayer)
           + setTimeout(aiHandler, 1000);
-      } else if (humanPlayer.score > 20) {
+      } else if (humanPlayer.score > 20 && aiPlayer.score <= 20) {
         aiPlayer.winHandler(aiPlayer);
-      } else if (aiPlayer.score > 20) {
+      } else if (aiPlayer.score > 20 && humanPlayer.score <= 20) {
         humanPlayer.winHandler(humanPlayer);
-      } else if (humanPlayer.score < 20 || useCard === 'usedCard' && aiPlayer.score === 20) {
+      } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
         humanPlayer.drawCards(humanPlayer);
+
+        drawCardBtn.addEventListener("click", multiPlayer);
+        standBtn.addEventListener("click", bindedToAiPlayer);
+        drawCardBtn.classList.remove('unclickable');
+        standBtn.classList.remove('unclickable');
       } else if (humanPlayer.score === 20 && aiPlayer.score < 20 || useCard === 'usedCard') {
         setTimeout(aiHandler, 1000);
-      } else if ((humanPlayer.score === 20) & (aiPlayer === 20)) {
-        this.winHandler(this); /* outputs 'it's a draw' */
-      } else {
+      } else if ((humanPlayer.score === 20) && (aiPlayer === 20)) {
+        humanPlayer.winHandler(humanPlayer); /* outputs 'it's a draw' */
+      } else if ((humanPlayer.score === 20) && aiPlayer > 20){
+        humanPlayer.winHandler(humanPlayer);        
+      } else if (humanPlayer.score > 20 && aiPlayer.score === 20){
+        aiPlayer.winHandler(aiPlayer);
+      } else if (
+        humanPlayer.cardPool.length === 6 && human.score !== 20
+        || aiPlayer.cardPool.length === 6 && aiPlayer.score !== 20){
+          aiPlayer.winHandler(aiPlayer)
+        }
+        else {
         console.log("multiPlayer() win conditions error");
       }
     
-
-    clickSound();
-    toggleBtnsWhenTurn();
-    standBtn.removeEventListener("click", bindedToAiPlayer);
-    drawCardBtn.removeEventListener("click", multiPlayer);
+function uiResponseToTurns() {
+  clickSound();
+  toggleBtnsWhenTurn();
+  standBtn.removeEventListener("click", bindedToAiPlayer);
+  drawCardBtn.removeEventListener("click", multiPlayer);
+}
+uiResponseToTurns()
   }
   
   function aiBehavior() {    
@@ -148,4 +165,4 @@ function tossCards() {
   }
 ///////////////////////////////
 /* Function calls */ 
-tossCards();
+  tossCards();
