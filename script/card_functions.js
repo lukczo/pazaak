@@ -17,12 +17,17 @@ function outputPool(player){
   }
   
   function renderCards() {
+    
+    function random() {
+      generateNumbers = randomNumber() * randomOperator();
+      generateNumbers > -7 && generateNumbers < 7 ? generateNumbers : random();
+      return generateNumbers;
+    };       
+
       humanPlayer.hand.length = 0
       handdeck = Array.from(playerHandDeck.children);
       for (const [index, cards] of handdeck.entries()){
-        random = randomNumber() * randomOperator();  
-
-        createdCardObject = createCardObjects(playerCard, random);
+        createdCardObject = createCardObjects(playerCard, random());
         cards.innerHTML = createdCardObject.name;
         humanPlayer.hand.push(createdCardObject);  
 
@@ -33,9 +38,9 @@ function outputPool(player){
       aiPlayer.hand.length = 0;
       aiHanddeck = Array.from(aiHandDeck.children);
       for (const cards of aiHanddeck){
-        random = randomNumber() * randomOperator();  
+        random()
 
-        createdCardObject = createCardObjects(playerCard, random);
+        createdCardObject = createCardObjects(playerCard, random());
         aiPlayer.hand.push(createdCardObject);  
 
         resetCardStyle(cards);  

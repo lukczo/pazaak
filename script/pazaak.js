@@ -84,17 +84,18 @@ class player {
   turn() {
     if ( humanPlayer.score < 20 && aiPlayer.score > 20) {
       humanPlayer.winHandler(humanPlayer);
+      
     } else if (humanPlayer.score === 20 && aiPlayer.score < 20) {
       aiPlayer.drawCards();
     } else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
-      this.winHandler();
+      humanPlayer.winHandler(humanPlayer);
     } else if (humanPlayer.score > 20 && aiPlayer.score < 20) {
       aiPlayer.winHandler(aiPlayer);
     } else if (humanPlayer.score > 20 && aiPlayer.score === 20) {
       aiPlayer.winHandler(aiPlayer);
     } else if (humanPlayer.score === 20 && aiPlayer.score > 20) {
       humanPlayer.winHandler(humanPlayer);
-    }else if (humanPlayer.score < 20 && aiPlayer.score === 20){
+    } else if (humanPlayer.score < 20 && aiPlayer.score === 20){
       humanPlayer.drawCards();
     } else if (humanPlayer.score < 20 && aiPlayer.score < 20){
       this.drawCards() 
@@ -134,11 +135,19 @@ class player {
       humanPlayer.score === aiPlayer.score
       ? alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
       : win === (aiPlayer)
-      ? alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) + aiCardDom.classList.toggle('rotate-vert-center')
+      ? alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`)
+        + aiCardDom.classList.toggle('rotate-vert-center')
       : win === (humanPlayer)
-      ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`) + playerCardDom.classList.toggle('rotate-vert-center') 
+      ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`)
+        + playerCardDom.classList.toggle('rotate-vert-center') 
       : console.log('--[LOG]--- win handler error');
-      
+
+      resetBtn.innerHTML='Continue?'
+      drawCardBtn.classList.toggle('unclickable');
+      standBtn.classList.toggle('unclickable');
+      drawCardBtn.removeEventListener('click', multiPlayer);
+      /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
+      standBtn.removeEventListener("click", bindedToAiPlayer);
   }
 
   useCard(num) {

@@ -26,16 +26,14 @@ function tossCards() {
   function multiPlayer() {  
     clickSound();
     humanPlayer.turn(humanPlayer);
-    setTimeout(aiBehavior, 1000);
-    setTimeout(clickSound, 1000);
+    ( humanPlayer.score < 20 && aiPlayer.score < 20)
+    ? setTimeout(aiBehavior, 1000)
+      + setTimeout(clickSound, 1000)
+    : console.log('stopped')    
   }
   
-  function aiBehavior() {
-    if ((aiPlayer.score === 18 && !aiPlayer.hand[0]) || aiPlayer.score === 19) {
-      aiPlayer.turn(aiPlayer);
-    } else {
-      aiPlayer.turn(aiPlayer);
-    }
+  function aiBehavior() {    
+      stop !== 'stop' ? aiPlayer.turn(aiPlayer) : console.log('stopped');
   }
   
   function outputScore(name, score) {
@@ -97,6 +95,9 @@ function tossCards() {
       cards.innerHTML = null;
     }
   
+    resetBtn.innerHTML='RESET';
+    playerCardDom.classList.remove('rotate-vert-center');    
+    aiCardDom.classList.remove('rotate-vert-center');
     startBtn.addEventListener("click", start);     
     resetBtn.removeEventListener("click", reset);      
     drawCardBtn.removeEventListener('click', multiPlayer);
@@ -107,6 +108,9 @@ function tossCards() {
     tossCards();
     toggleGameButtons();
   
+    drawCardBtn.classList.add('unclickable');
+    standBtn.classList.add('unclickable');
+
     console.log('Game was reset')
   }
 ///////////////////////////////

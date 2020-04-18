@@ -42,14 +42,17 @@ main {
     min-height: 600px;
     background-color: rgb(67, 87, 87);
     margin: 25px;
+    padding: 15px;
     border-radius: 5px;
 }
 
 .ai {
     width: 500px;
     min-height: 600px;
-    background-color: rgb(128, 82, 82);
+    /* background-color: rgb(128, 82, 82); */
+    background-color: #353b48;;
     margin: 25px;
+    padding: 15px;
     border-radius: 5px;
 }
 
@@ -145,12 +148,12 @@ button:hover {
 .playersHeader{
     align-self: center;
     align-items: center;
-    font-size: 2rem;
+    font-size: 4rem;
     font-weight: bold;
 }
 
 .scores {
-    font-size: 3rem;
+    font-size: 5rem;
     color: rgb(214, 179, 63);
 }
 
