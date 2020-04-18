@@ -135,7 +135,21 @@ class player {
       setTimeout(aiBehavior, 1000);
     } else {
     }
-    humanPlayer.winHandler()
+    if (this === humanPlayer){
+      (this.score === 20 && aiPlayer.score < 20)
+      ? multiPlayer('usedCard')
+      : this.score > 20
+      ? aiPlayer.winHandler(aiPlayer)
+      : console.log('usecard error');
+    } else if (this === aiPlayer){
+      (this.score === 20 && humanPlayer.score < 20)
+      ? humanPlayer.drawCards(humanPlayer)
+      : this.score > 20
+      ? humanPlayer.winHandler(humanPlayer)
+      : humanPlayer.drawCards(humanPlayer);
+    }else {
+      console.log('useCard() error');
+    }
   }
 
 /*   renderCards(){

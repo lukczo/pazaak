@@ -30,43 +30,43 @@ function tossCards() {
     standBtn.classList.toggle('unclickable');
   }
 
+  function aiHandler() {
+    aiBehavior();
+    clickSound();
+    toggleBtnsWhenTurn();
+    drawCardBtn.addEventListener("click", multiPlayer);
+    standBtn.addEventListener("click", bindedToAiPlayer);
+  }
 
-
-  function multiPlayer() {
-
-    if (humanPlayer.score < 20 && aiPlayer.score < 20) {
-      humanPlayer.drawCards(humanPlayer);
-      setTimeout(aiHandler, 1000);
-    } else if (humanPlayer.score > 20) {
-      aiPlayer.winHandler(aiPlayer);
-    } else if (aiPlayer.score > 20) {
-      humanPlayer.winHandler(humanPlayer);
-    } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
-      humanPlayer.drawCards(humanPlayer);
-    } else if (humanPlayer.score === 20 && aiPlayer.score < 20) {
-      setTimeout(aiHandler, 1000);
-    } else if ((humanPlayer.score === 20) & (aiPlayer === 20)) {
-      this.winHandler(this); /* outputs 'it's a draw' */
-    } else {
-      console.log("multiPlayer() win conditions error");
-    }
+  function multiPlayer(useCard) {
+      if (humanPlayer.score < 20 && aiPlayer.score < 20) {
+        useCard === 'usedCard'
+        ? setTimeout(aiHandler, 1000)
+        : humanPlayer.drawCards(humanPlayer)
+          + setTimeout(aiHandler, 1000);
+      } else if (humanPlayer.score > 20) {
+        aiPlayer.winHandler(aiPlayer);
+      } else if (aiPlayer.score > 20) {
+        humanPlayer.winHandler(humanPlayer);
+      } else if (humanPlayer.score < 20 || useCard === 'usedCard' && aiPlayer.score === 20) {
+        humanPlayer.drawCards(humanPlayer);
+      } else if (humanPlayer.score === 20 && aiPlayer.score < 20 || useCard === 'usedCard') {
+        setTimeout(aiHandler, 1000);
+      } else if ((humanPlayer.score === 20) & (aiPlayer === 20)) {
+        this.winHandler(this); /* outputs 'it's a draw' */
+      } else {
+        console.log("multiPlayer() win conditions error");
+      }
+    
 
     clickSound();
     toggleBtnsWhenTurn();
     standBtn.removeEventListener("click", bindedToAiPlayer);
     drawCardBtn.removeEventListener("click", multiPlayer);
-
-    function aiHandler() {
-      aiBehavior();
-      clickSound();
-      toggleBtnsWhenTurn();
-      drawCardBtn.addEventListener("click", multiPlayer);
-      standBtn.addEventListener("click", bindedToAiPlayer);
-    }
   }
   
   function aiBehavior() {    
-      stop !== 'stop' ? aiPlayer.drawCards(aiPlayer) : console.log('stopped');
+      aiPlayer.drawCards(aiPlayer);
   }
   
   function outputScore(name, score) {
