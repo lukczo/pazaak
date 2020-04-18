@@ -109,7 +109,7 @@ class player {
 
   winHandler(win) {   
 
-    /* TEST TEST TEST TEST */
+    /* */
     drawCardBtn.classList.add('unclickable');
     standBtn.classList.add('unclickable');
     drawCardBtn.removeEventListener('click', multiPlayer);
