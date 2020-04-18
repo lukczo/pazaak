@@ -104,24 +104,24 @@ class player {
     console.log(`${this.name} SCORE: ..::${this.score}::..`);
   }
 
-  winHandler(win) { 
-
-    const aiWon = alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) 
-    + aiCardDom.classList.toggle('rotate-vert-center');
-    
-    const humanWon = alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`) + playerCardDom.classList.toggle('rotate-vert-center');
-    
-        if(humanPlayer.score === 20 && aiPlayer.score === 20){
+  winHandler(win) {   
+    if(humanPlayer.score === 20 && aiPlayer.score === 20){
             alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
         } else if (win === aiPlayer){
-            return aiWon;
+          alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) ;
+          aiCardDom.classList.toggle('rotate-vert-center');
         } else if(win === humanPlayer){
-          return humanWon;
-        } else if(humanPlayer.cardPool.length === 6 
+          alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
+          playerCardDom.classList.toggle('rotate-vert-center');
+        } else if(win === gm && humanPlayer.cardPool.length === 6 
             && human.score !== 20
             && aiPlayer.cardPool.length === 6
             && aiPlayer.score !== 20 ){
-        humanPlayer.score > aiPlayer.score ? playerWon : aiWon
+        humanPlayer.score > aiPlayer.score 
+        ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`)
+        + playerCardDom.classList.toggle('rotate-vert-center')
+        : alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`)
+        + aiCardDom.classList.toggle('rotate-vert-center')
         } else{
             console.log('winHandler issue')
         };
@@ -197,4 +197,4 @@ class player {
 /* Players declarations */ 
 const humanPlayer = new player("Ukwial", new Array, new Array, 0);
 const aiPlayer = new player("Opponent", new Array, new Array, 0);
-
+const gm = new player ("gm", new Array, new Array, 0);
