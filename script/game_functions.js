@@ -40,38 +40,36 @@ function tossCards() {
   }
 
   function multiPlayer(useCard) {
-    if (
-      humanPlayer.cardPool.length === 6 && humanPlayer.score !== 20
-      || aiPlayer.cardPool.length === 6 && aiPlayer.score !== 20){
-        gm.winHandler(gm)
-      } else if (humanPlayer.score < 20 && aiPlayer.score < 20) {
-        useCard === 'usedCard'
-        ? setTimeout(aiHandler, 1000)
-        : humanPlayer.drawCards(humanPlayer)
-          + setTimeout(aiHandler, 1000);
-      } else if (humanPlayer.score > 20 && aiPlayer.score <= 20) {
-        aiPlayer.winHandler(aiPlayer);
-      } else if (aiPlayer.score > 20 && humanPlayer.score <= 20) {
-        humanPlayer.winHandler(humanPlayer);
-      } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
-        humanPlayer.drawCards(humanPlayer);
+ 
+    if (humanPlayer.cardPool.length < 6
+        && aiPlayer.cardPool.length < 6){
+        
+        if ((useCard === 'usedCard' || humanPlayer.score < 20) && aiPlayer.score < 20) {
+                useCard === 'usedCard'
+                ? setTimeout(aiHandler, 1000)
+                : humanPlayer.drawCards(humanPlayer)
+                + setTimeout(aiHandler, 1000);
+          } else if (humanPlayer.score > 20) {
+                aiPlayer.winHandler(aiPlayer);
+          } else if (aiPlayer.score > 20) {
+                 humanPlayer.winHandler(humanPlayer);
+          } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
+            humanPlayer.drawCards(humanPlayer);    
+            uiResponseToTurns();
+          } else if ((humanPlayer.score === 20  || useCard === 'usedCard') && aiPlayer.score < 20) {
+                aiPlayer.drawCards(aiPlayer);    
+                uiResponseToTurns();
+        } else if (humanPlayer.score === 20 && (aiPlayer === 20)) {
+            gm.winHandler(gm); /* outputs 'it's a draw' */
+          } else {
+            console.log("multiPlayer() win conditions error");
+          }
+    } else {
+      gm.winHandler(gm);
+      console.log('Card pool length exceeded');
+  }
 
-        drawCardBtn.addEventListener("click", multiPlayer);
-        standBtn.addEventListener("click", bindedToAiPlayer);
-        drawCardBtn.classList.remove('unclickable');
-        standBtn.classList.remove('unclickable');
-      } else if (humanPlayer.score === 20 && aiPlayer.score < 20 || useCard === 'usedCard') {
-        setTimeout(aiHandler, 1000);
-      } else if (humanPlayer.score === 20 && (aiPlayer === 20)) {
-        gm.winHandler(gm); /* outputs 'it's a draw' */
-      } else if (humanPlayer.score === 20 && aiPlayer > 20){
-        humanPlayer.winHandler(humanPlayer);        
-      } else if (humanPlayer.score > 20 && aiPlayer.score === 20){
-        aiPlayer.winHandler(aiPlayer);
-      } else {
-        console.log("multiPlayer() win conditions error");
-      }
-    
+
 function uiResponseToTurns() {
   clickSound();
   toggleBtnsWhenTurn();
@@ -81,6 +79,30 @@ function uiResponseToTurns() {
 uiResponseToTurns()
   }
   
+
+
+function poolValidation() {  
+  return humanPlayer.cardPool.length + aiPlayer.cardPool.length;
+}
+
+function scoreValidation(player, enemy) {
+  if (player.cardPool.length < 6) {
+        if (player.score > 20){
+            enemy.winHandler(enemy);
+        } else if (enemy.score > 20) {
+            player.winHandler(player);
+        } else if (player.score < 20 && enemy.score <= 20){
+            player.drawCards(player); 
+        }  else if (player.score === 20 && enemy.score === 20){
+            gm.winHandler(gm); /* outputs 'it's a draw' */
+        } else {
+            console.log("multiPlayer() win conditions error");
+        }
+  } else 
+    gm.winHandler(gm);
+    console.log('Card pool length exceeded');
+}
+
   function aiBehavior() {    
       aiPlayer.drawCards(aiPlayer);
   }

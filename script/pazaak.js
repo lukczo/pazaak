@@ -45,50 +45,18 @@ class player {
 
   drawCards() {
     console.log("###########################");
-        let generatedIndex;
-    generatedIndex = randomNumber();
-    /*     console.log(`--[LOG]---We have generated index number of: [${generatedIndex}]`); */
-
-    if (
-      generatedIndex <= _CARDSTACK.length &&
-      _CARDSTACK[generatedIndex] !== null
-      && this.cardPool.length <= 5
-    ) {
-      console.log(
-        `${this.name} have drawn card no.: ${_CARDSTACK[generatedIndex]}`
-      );   
-
-      let createdCardObject;
-      createdCardObject = createCardObjects(stackCard, _CARDSTACK[generatedIndex]);      
-      _OFFSTACK.push(generatedIndex);
-      this.cardPool.push(createdCardObject);
-      _CARDSTACK.splice(generatedIndex, 1, null);
-      this.cardPool.length > 0
-        ? this.scoreKeeper()
-        : console.log("--[LOG]---Pool is empty");
-  
-        outputPool(this.name, stackCard, createdCardObject.id)
-        /* aiPlayer.drawCards(); */
-
-        tossCards();
-
-
-    } else if (this.cardPool.length >= 6) {
-    gm.winHandler(gm);
-    console.log('Card pool length bigger than 6')
-    }else if (
-      generatedIndex > _CARDSTACK.length ||
-      _CARDSTACK[generatedIndex] === null
-    ) {
-      check() === true
-        ? alert("--[LOG]---No more cards left")
-        : this.drawCards() /*  +
-          console.log(
-            `--[LOG]---Generated index: ${generatedIndex} was unavailable, card was drawn again---[LOG]--`
-          ) */;
-    } else {
-    }
+    let generatedIndex, createdCardObject;
+    generatedIndex = randomNumber();    
+    console.log(`${this.name} have drawn card no.: ${_CARDSTACK[generatedIndex]}`);   
     
+    createdCardObject = createCardObjects(stackCard, generatedIndex);      
+    this.cardPool.push(createdCardObject);
+
+    this.cardPool.length > 0
+    ? this.scoreKeeper()
+    : console.log("--[LOG]---Pool is empty");  
+    
+    outputPool(this.name, stackCard, createdCardObject.id)
 }
   scoreKeeper() {
   
@@ -104,6 +72,12 @@ class player {
 
 
     outputScore(this.name, this.score);
+
+    if (humanPlayer.score === 20 && aiPlayer === 20) {
+      gm.winHandler(gm); /* outputs 'it's a draw' */
+    }
+
+
     console.log(`${this.name} SCORE: ..::${this.score}::..`);
   }
 
@@ -116,25 +90,44 @@ class player {
     standBtn.removeEventListener("click", bindedToAiPlayer);
     resetBtn.innerHTML='Continue?';
 
-    if(win === gm ){
-      humanPlayer.score > aiPlayer.score 
-      ? alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`)
-      + playerCardDom.classList.toggle('rotate-vert-center')
-      : alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`)
-      + aiCardDom.classList.toggle('rotate-vert-center')
-      } else if(humanPlayer.score === 20 && aiPlayer.score === 20){
-            alert("_^_^_^_^_^_It's a draw_^_^_^_^_^_")
-        } else if (win === aiPlayer){
+    switch (win){
+      case gm:
+          if (humanPlayer.score < 20
+              && humanPlayer.score > aiPlayer.score
+              && aiPlayer.score < 20) {
+                  alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
+                  playerCardDom.classList.toggle('rotate-vert-center');
+          } else if(humanPlayer.score < 20
+                  && humanPlayer.score < aiPlayer.score
+                  && aiPlayer.score < 20) {
+                      alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
+                      aiCardDom.classList.toggle('rotate-vert-center');
+          } else if ( humanPlayer.score > 20) {
+              alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
+              aiCardDom.classList.toggle('rotate-vert-center');
+          } else if (aiPlayer.score > 20) {
+              alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
+              playerCardDom.classList.toggle('rotate-vert-center');
+          } else if (humanPlayer.score === aiPlayer.score) {
+              alert('`_^_^_^_^_^_ A draw! This set is tied `_^_^_^_^_^_') 
+          } else{
+              console.log('case gm handler error');
+          }
+      break;
+  
+      case aiPlayer:
           alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) ;
           aiCardDom.classList.toggle('rotate-vert-center');
-        } else if(win === humanPlayer){
+  
+      break;
+  
+      case humanPlayer:
           alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
           playerCardDom.classList.toggle('rotate-vert-center');
-        } else{
-            console.log('winHandler issue')
-        };
-    }
-
+      break;
+        }
+  }
+  
   useCard(num) {
     if (this.hand[num] != null) {
       console.log(`${this.name} used card no.: ${this.hand[num].value}`);
@@ -150,7 +143,7 @@ class player {
     } else {
     }
     if (this === humanPlayer){
-      (humanPlayer.score === 20 || humanPlayer.score < 20 && aiPlayer.score <= 20)
+      (humanPlayer.score <= 20 && aiPlayer.score <= 20)
       ? multiPlayer('usedCard')
       : humanPlayer.score > 20
       ? aiPlayer.winHandler(aiPlayer)
@@ -163,7 +156,7 @@ class player {
       : this.score > 20
       ? humanPlayer.winHandler(humanPlayer)
       : humanPlayer.drawCards(humanPlayer); */
-    }else {
+    } else {
       console.log('useCard() error');
     }
   }
