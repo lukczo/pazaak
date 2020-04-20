@@ -110,12 +110,12 @@ class player {
               playerCardDom.classList.toggle('rotate-vert-center');
           } else if (humanPlayer.score === aiPlayer.score) {
               alert('`_^_^_^_^_^_ A draw! This set is tied `_^_^_^_^_^_') 
-          } else if (humanPlayer.cardPool.length === 6
+          } else if (humanPlayer.cardPool.length === 9
             && humanPlayer.score < 20
             && aiPlayer.score === 20){
               alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
               aiCardDom.classList.toggle('rotate-vert-center');
-          } else if (aiPlayer.cardPool.length === 6
+          } else if (aiPlayer.cardPool.length === 9
             && aiPlayer.score < 20
             && humanPlayer.score === 20){
               alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
@@ -161,11 +161,11 @@ class player {
       ? humanPlayer.winHandler(humanPlayer)
       : console.log('useCard() error first if section');
     } else if (this === aiPlayer){
-/*       (this.score === 20 && humanPlayer.score < 20)
-      ? humanPlayer.drawCards(humanPlayer)
-      : this.score > 20
+      this.score > 20
       ? humanPlayer.winHandler(humanPlayer)
-      : humanPlayer.drawCards(humanPlayer); */
+      : humanPlayer.drawCards(humanPlayer); 
+      
+
     } else {
       console.log('useCard() error');
     }

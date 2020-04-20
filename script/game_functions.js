@@ -41,8 +41,8 @@ function tossCards() {
 
   function multiPlayer(useCard) {
  
-    if (humanPlayer.cardPool.length < 6
-        && aiPlayer.cardPool.length < 6){
+    if (humanPlayer.cardPool.length < 9
+        && aiPlayer.cardPool.length < 9){
         
         if ((useCard === 'usedCard' || humanPlayer.score < 20) && aiPlayer.score < 20) {
                 useCard === 'usedCard'
@@ -60,7 +60,7 @@ function tossCards() {
             humanPlayer.drawCards(humanPlayer);    
 
           } else if ((humanPlayer.score === 20  || useCard === 'usedCard') && aiPlayer.score < 20) {
-                aiPlayer.drawCards(aiPlayer);    
+            setTimeout(aiHandler, 1000);
 
         } else if (humanPlayer.score === 20 && (aiPlayer === 20)) {
             gm.winHandler(gm); /* outputs 'it's a draw' */
@@ -109,6 +109,26 @@ function scoreValidation(player, enemy) {
 
   function aiBehavior() {    
       aiPlayer.drawCards(aiPlayer);
+
+for (const [index, aiHandCard] of aiPlayer.hand.entries()){
+  
+  if (aiPlayer.score < 20){
+    (20 - aiPlayer.score) === aiHandCard.value
+    ? aiPlayer.useCard(index)
+      + console.log('AI Uses hand card no:' +  aiPlayer.hand[index])
+      + resetCardStyleAi (index)
+    : console.log('Ai didnt use any hand cards');
+  } else if (aiPlayer.score > 20 && aiHandCard.value < 0){ 
+    (aiPlayer.score + aiHandCard.value) <= 20
+    ? aiPlayer.useCard(index)
+    + resetCardStyle (index)
+    : console.log('AI Uses hand card no:' +  aiPlayer.hand[index])
+  }
+}
+function resetCardStyleAi (index) {
+  aiHandDeck.children[index].classList.remove(aiHandCardcolor);
+  aiHandDeck.children[index].innerHTML = null;
+}
   }
   
   function outputScore(name, score) {
