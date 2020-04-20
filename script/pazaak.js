@@ -47,7 +47,7 @@ class player {
     console.log("###########################");
     let generatedIndex, createdCardObject;
     generatedIndex = randomNumber();    
-    console.log(`${this.name} have drawn card no.: ${_CARDSTACK[generatedIndex]}`);   
+    console.log(`${this.name} have drawn card no.: ${generatedIndex}`);   
     
     createdCardObject = createCardObjects(stackCard, generatedIndex);      
     this.cardPool.push(createdCardObject);
@@ -110,7 +110,17 @@ class player {
               playerCardDom.classList.toggle('rotate-vert-center');
           } else if (humanPlayer.score === aiPlayer.score) {
               alert('`_^_^_^_^_^_ A draw! This set is tied `_^_^_^_^_^_') 
-          } else{
+          } else if (humanPlayer.cardPool.length === 6
+            && humanPlayer.score < 20
+            && aiPlayer.score === 20){
+              alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
+              aiCardDom.classList.toggle('rotate-vert-center');
+          } else if (aiPlayer.cardPool.length === 6
+            && aiPlayer.score < 20
+            && humanPlayer.score === 20){
+              alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
+              playerCardDom.classList.toggle('rotate-vert-center');
+          }else {
               console.log('case gm handler error');
           }
       break;
