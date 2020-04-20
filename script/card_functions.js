@@ -42,7 +42,7 @@ function outputPool(player){
 
         createdCardObject = createCardObjects(playerCard, random());
         aiPlayer.hand.push(createdCardObject);  
-        cards.innerHTML = createdCardObject.name;
+        /* cards.innerHTML = createdCardObject.name; */
 
         cards.classList.add(aiHandCardcolor);
       }      

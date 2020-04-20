@@ -136,6 +136,8 @@ class player {
           playerCardDom.classList.toggle('rotate-vert-center');
       break;
         }
+
+
   }
   
   useCard(num) {
@@ -147,23 +149,26 @@ class player {
       
       this.scoreKeeper();
 
-      resetCardStyle(playerHandDeck.children[num]);
-      playerHandDeck.children[num].innerHTML = null;    
+
       outputPool(this.name); 
     } else {
     }
     if (this === humanPlayer){
       (humanPlayer.score <= 20 && aiPlayer.score <= 20)
-      ? multiPlayer('usedCard')
+      ? console.log('no trigger') /* multiPlayer('usedCard') */
       : humanPlayer.score > 20
       ? aiPlayer.winHandler(aiPlayer)
       : (humanPlayer.score < 20 && aiPlayer.score > 20)
       ? humanPlayer.winHandler(humanPlayer)
       : console.log('useCard() error first if section');
+
+      resetCardStyle(playerHandDeck.children[num]);
+      playerHandDeck.children[num].innerHTML = null;    
+
     } else if (this === aiPlayer){
       this.score > 20
       ? humanPlayer.winHandler(humanPlayer)
-      : humanPlayer.drawCards(humanPlayer); 
+      : console.log ('useCard: checking if human player won'); 
       
 
     } else {

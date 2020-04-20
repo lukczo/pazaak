@@ -53,18 +53,18 @@ function tossCards() {
           } else if (humanPlayer.score > 20) {
                 aiPlayer.winHandler(aiPlayer);
                 uiResponseToTurns()
+
           } else if (aiPlayer.score > 20) {
                  humanPlayer.winHandler(humanPlayer);
                  uiResponseToTurns()
-          } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
+          } else if (useCard !== 'usedCard' && humanPlayer.score < 20 && aiPlayer.score === 20) {
             humanPlayer.drawCards(humanPlayer);    
 
           } else if ((humanPlayer.score === 20  || useCard === 'usedCard') && aiPlayer.score < 20) {
             setTimeout(aiHandler, 1000);
 
-        } else if (humanPlayer.score === 20 && (aiPlayer === 20)) {
+        } else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
             gm.winHandler(gm); /* outputs 'it's a draw' */
-            uiResponseToTurns()
           } else {
             console.log("multiPlayer() win conditions error");
           }
@@ -107,22 +107,23 @@ function scoreValidation(player, enemy) {
     console.log('Card pool length exceeded');
 }
 
-  function aiBehavior() {    
+function aiBehavior() {    
       aiPlayer.drawCards(aiPlayer);
 
 for (const [index, aiHandCard] of aiPlayer.hand.entries()){
-  
   if (aiPlayer.score < 20){
-    (20 - aiPlayer.score) === aiHandCard.value
-    ? aiPlayer.useCard(index)
-      + console.log('AI Uses hand card no:' +  aiPlayer.hand[index])
+   (20 - aiPlayer.score) === aiHandCard.value
+    ? setTimeout(aiPlayer.useCard(index),1000)
+      + console.log('AI Uses hand card no:' +  aiPlayer.hand[index].value)
       + resetCardStyleAi (index)
     : console.log('Ai didnt use any hand cards');
+    break
   } else if (aiPlayer.score > 20 && aiHandCard.value < 0){ 
     (aiPlayer.score + aiHandCard.value) <= 20
-    ? aiPlayer.useCard(index)
-    + resetCardStyle (index)
-    : console.log('AI Uses hand card no:' +  aiPlayer.hand[index])
+    ? setTimeout(aiPlayer.useCard(index), 1000)
+    + resetCardStyleAi (index)
+    : console.log('AI Uses hand card no:' +  aiPlayer.hand[index].value)
+    break
   }
 }
 function resetCardStyleAi (index) {
