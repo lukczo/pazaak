@@ -4,6 +4,7 @@ const startBtn = document.querySelector('#start')
 const resetBtn = document.querySelector('#reset');
 const standBtn = document.querySelector("#stand");
 const drawCardBtn = document.querySelector("#draw-card");
+const continueBtn = document.querySelector('#continue');
 
 const playerCardDom = document.querySelector('.player');
 const aiCardDom = document.querySelector('.ai');
@@ -12,6 +13,8 @@ const aiHandDeck = aiCardDom.lastElementChild;
 
 const playerScorePlace = document.querySelector("#score-player");
 const aiScorePlace = document.querySelector("#score-ai")
+const playerRoundCounter = document.querySelector('#player-won-rounds');
+const aiRoundCounter = document.querySelector('#ai-won-rounds');
 
 const playerPoolCards = document.querySelector("#player-pool").querySelectorAll('.pazaak-card');
 const aiPoolCards = document.querySelector("#ai-pool").querySelectorAll('.pazaak-card');

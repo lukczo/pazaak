@@ -2,7 +2,8 @@
 /* GLOBAL VARIABLES */
 const _CARDSTACK = [];
 const _OFFSTACK = [];
-
+const _humanWonRounds = [];
+const _aiWOnRounds = [];
 ///////////////////////////////
 /* GLOBAL FUNCTIONS */
 function randomNumber() {

@@ -22,6 +22,7 @@
 <li>  <button  id = "stand" class="unclickable" style="display: none";">Stand</button></li>
 <li><button id="pick-handdeck">Choose Cards</button></li>
 <li><button id="reset"  class="unclickable">RESET</button></li>
+<li><button id="continue" class="blocked"> Continue? </button></li>
         </ul>
         
         </div>
@@ -35,6 +36,11 @@
             <li>Player</li>
             <li>
                 Score: <span class="scores" id="score-player"></span>
+            </li>
+            <li id="player-won-rounds">
+                <span class="rounds-player"></span>
+                <span class="rounds-player"></span>
+                <span class="rounds-player"></span>
             </li>
         </ul>
     </div>
@@ -63,6 +69,11 @@
             <ul>
                 <li>Opponent</li>
                 <li>Score: <span class="scores" id="score-ai"></span></li>
+                <li id="ai-won-rounds">
+                    <span class="rounds-player"></span>
+                    <span class="rounds-player"></span>
+                    <span class="rounds-player"></span>
+                </li>
             </ul>
         </div>
 

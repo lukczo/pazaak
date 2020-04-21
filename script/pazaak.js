@@ -83,57 +83,55 @@ class player {
 
   winHandler(win) {   
 
+
+    function draw() {
+          alert('`_^_^_^_^_^_ A draw! This set is tied `_^_^_^_^_^_') 
+    }
+
     /* */
     drawCardBtn.classList.add('unclickable');
     standBtn.classList.add('unclickable');
     drawCardBtn.removeEventListener('click', multiPlayer);
     standBtn.removeEventListener("click", bindedToAiPlayer);
-    resetBtn.innerHTML='Continue?';
+    continueBtn.classList.toggle('blocked');
+    continueBtn.addEventListener('click', start)
 
     switch (win){
       case gm:
           if (humanPlayer.score < 20
               && humanPlayer.score > aiPlayer.score
               && aiPlayer.score < 20) {
-                  alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
-                  playerCardDom.classList.toggle('rotate-vert-center');
+                humanWon()
           } else if(humanPlayer.score < 20
                   && humanPlayer.score < aiPlayer.score
                   && aiPlayer.score < 20) {
-                      alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
-                      aiCardDom.classList.toggle('rotate-vert-center');
+                    aiWon()
           } else if ( humanPlayer.score > 20) {
-              alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
-              aiCardDom.classList.toggle('rotate-vert-center');
+            aiWon()
           } else if (aiPlayer.score > 20) {
-              alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
-              playerCardDom.classList.toggle('rotate-vert-center');
+            humanWon()
           } else if (humanPlayer.score === aiPlayer.score) {
-              alert('`_^_^_^_^_^_ A draw! This set is tied `_^_^_^_^_^_') 
+            draw()
           } else if (humanPlayer.cardPool.length === 9
             && humanPlayer.score < 20
             && aiPlayer.score === 20){
-              alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`);
-              aiCardDom.classList.toggle('rotate-vert-center');
+              aiWon()
           } else if (aiPlayer.cardPool.length === 9
             && aiPlayer.score < 20
             && humanPlayer.score === 20){
-              alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
-              playerCardDom.classList.toggle('rotate-vert-center');
+              humanWon()
           }else {
               console.log('case gm handler error');
           }
       break;
   
       case aiPlayer:
-          alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) ;
-          aiCardDom.classList.toggle('rotate-vert-center');
+        aiWon()
   
       break;
   
       case humanPlayer:
-          alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
-          playerCardDom.classList.toggle('rotate-vert-center');
+        humanWon()
       break;
         }
 
@@ -153,9 +151,20 @@ class player {
       outputPool(this.name); 
     } else {
     }
-    if (this === humanPlayer){
+
+if (this === humanPlayer){
+      resetCardStyle(playerHandDeck.children[num]);
+      playerHandDeck.children[num].innerHTML = null;    
+    } else if (this === aiPlayer){
+      showBtns();
+    } else {
+      console.log('useCard() error');
+    } 
+
+
+/*     if (this === humanPlayer){
       (humanPlayer.score <= 20 && aiPlayer.score <= 20)
-      ? console.log('no trigger') /* multiPlayer('usedCard') */
+      ? console.log('no trigger')
       : humanPlayer.score > 20
       ? aiPlayer.winHandler(aiPlayer)
       : (humanPlayer.score < 20 && aiPlayer.score > 20)
@@ -173,10 +182,10 @@ class player {
 
     } else {
       console.log('useCard() error');
-    }
+    } */
   }
 
-/*   renderCards(){
+   renderCards(){
     humanPlayer.hand.length = 0;
     aiPlayer.hand.length = 0;
 
@@ -199,8 +208,46 @@ class player {
       }
       this.hand.push(createdCardObject);  
   }
-}*/
+}
 } 
+
+
+function humanWon() {
+  alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
+  playerCardDom.classList.toggle('rotate-vert-center');
+  _humanWonRounds.push(1);
+  numberOfRoundsWonByHuman = _humanWonRounds.length;
+
+  switch (numberOfRoundsWonByHuman){
+    case 1: 
+    playerRoundCounter.children[0].classList.add('round-won');
+    break;
+    case 2:
+      playerRoundCounter.children[1].classList.add('round-won');
+    break;
+    case 3:
+      playerRoundCounter.children[2].classList.add('round-won');
+    break;
+  }
+}
+
+function aiWon() {
+  alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) ;
+  aiCardDom.classList.toggle('rotate-vert-center');
+  _aiWOnRounds.push(1);
+  numberOfRoundsWonByAi = _aiWOnRounds.length;
+  switch (numberOfRoundsWonByAi){
+    case 1: 
+    aiRoundCounter.children[0].classList.add('round-won');
+    break;
+    case 2:
+      aiRoundCounter.children[1].classList.add('round-won');
+    break;
+    case 3:
+      aiRoundCounter.children[2].classList.add('round-won');
+    break;
+  }
+}
 /////////////////////////////////
 /* Players declarations */ 
 const humanPlayer = new player("Ukwial", new Array, new Array, 0);

@@ -195,6 +195,17 @@ button:hover {
     overflow-y: hidden;
 }
 
+.rounds-player {
+    display: inline-block;
+    width: 100px;
+    height: 15px;
+    border: 1px grey solid;
+}
+
+.round-won {
+    background-color: rgb(214, 179, 63);
+}
+/* --------------------------------------------- */
 @media only screen and (max-width: 700px) {
     .header :first-child h1 {
         display: none;
@@ -202,6 +213,7 @@ button:hover {
     .player {
         display: flex;
         flex-wrap: wrap;
+        justify-content: space-evenly;
         width: 500px;
         min-height: 100px;
         margin: 0;
