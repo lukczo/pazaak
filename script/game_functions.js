@@ -222,7 +222,8 @@ function resetCardStyleAi (index) {
 
     tossCards();
     toggleGameButtons();
-  
+    renderCards();
+
     drawCardBtn.classList.add('unclickable');
     standBtn.classList.add('unclickable');
 
