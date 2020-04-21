@@ -93,8 +93,6 @@ class player {
     standBtn.classList.add('unclickable');
     drawCardBtn.removeEventListener('click', multiPlayer);
     standBtn.removeEventListener("click", bindedToAiPlayer);
-    continueBtn.classList.toggle('blocked');
-    continueBtn.addEventListener('click', start.bind(null, 'continue'))
 
     switch (win){
       case gm:
@@ -135,6 +133,8 @@ class player {
       break;
         }
 
+        continueBtn.classList.toggle('blocked');
+        continueBtn.addEventListener('click', nextRound);
 
   }
   
@@ -227,6 +227,9 @@ function humanWon() {
     break;
     case 3:
       playerRoundCounter.children[2].classList.add('round-won');
+      alert('Congratulations! You have won the game :)');
+      continueBtn.classList.toggle('blocked');
+      resetBtn.innerHTML = 'Play again?';
     break;
   }
 }
@@ -245,6 +248,9 @@ function aiWon() {
     break;
     case 3:
       aiRoundCounter.children[2].classList.add('round-won');
+      alert('GAME OVER. AI has won the game, better luck next time!');
+      continueBtn.classList.toggle('blocked');
+      resetBtn.innerHTML = 'Play again?';
     break;
   }
 }

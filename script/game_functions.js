@@ -69,7 +69,7 @@ function tossCards() {
             showBtns();
           } else if ((humanPlayer.score === 20) && aiPlayer.score < 20) {
             setTimeout(aiHandler, 1000);
-
+            showBtns();
         } else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
             gm.winHandler(gm); /* outputs 'it's a draw' */
           } else {
@@ -85,7 +85,10 @@ function aiBehavior() {
       aiPlayer.drawCards(aiPlayer);
 
 for (const [index, aiHandCard] of aiPlayer.hand.entries()){
-  if (aiPlayer.score < 20){
+  if (aiHandCard === null) {
+    continue
+  }  
+  else if (aiPlayer.score < 20 && aiHandCard !== null){
    (20 - aiPlayer.score) === aiHandCard.value
     ? console.log('AI Uses hand card no:' +  aiPlayer.hand[index].value)
       + setTimeout(aiPlayer.useCard(index),1000)
@@ -93,13 +96,16 @@ for (const [index, aiHandCard] of aiPlayer.hand.entries()){
       + showBtns() 
     : console.log('Ai didnt use any hand cards');
     break
-  } else if (aiPlayer.score > 20 && aiHandCard.value < 0){ 
+  } else if (aiPlayer.score > 20 && aiHandCard.value < 0  && aiHandCard !== null){ 
     (aiPlayer.score + aiHandCard.value) <= 20
     ? setTimeout(aiPlayer.useCard(index), 1000)
     + resetCardStyleAi (index)
     + showBtns() 
-    : console.log('AI Uses hand card no:' +  aiPlayer.hand[index].value)
+    : console.log('AI Uses hand card no:')
     break
+  }
+  else{
+
   }
 }
 function resetCardStyleAi (index) {
@@ -118,15 +124,12 @@ function resetCardStyleAi (index) {
     }
   }
   
-  function start(nextRound) {
+  function start() {
     if (humanPlayer.hand.length > 0) {
       multiPlayer();
       clickSound();
       toggleGameButtons();
-
-      nextRound === 'continue'
-      ? console.log('Next round')
-      : renderCardsBtns()
+      renderCardsBtns();
 
       startBtn.removeEventListener('click', start);  
       drawCardBtn.addEventListener("click", multiPlayer);
@@ -139,9 +142,38 @@ function resetCardStyleAi (index) {
   }
   }
 
+  function nextRound(){
+  
+    humanPlayer.cardPool.length = 0;
+    humanPlayer.score = 0;
+    aiPlayer.cardPool.length = 0;
+    aiPlayer.score = 0;
+    outputScore(humanPlayer.name, 0);
+    outputScore(aiPlayer.name, 0);
+    playerCardDom.classList.remove('rotate-vert-center');    
+    aiCardDom.classList.remove('rotate-vert-center');
+
+    playerPool = Array.from(playerPoolCards);
+    for (const cards of playerPool){
+      resetCardStyle(cards);
+      cards.innerHTML = null;
+    }
+  
+    aiPool = Array.from(aiPoolCards);
+    for (const cards of aiPool){
+      resetCardStyle(cards);
+      cards.innerHTML = null;
+    }
+
+    showBtns();
+    continueBtn.classList.toggle('blocked');
+  }
+
   function reset() {
     _CARDSTACK.length = 0;
-  
+    _aiWOnRounds.length = 0;
+    _humanWonRounds.length = 0;
+
     humanPlayer.cardPool.length = 0;
     humanPlayer.hand.length = 0;
     humanPlayer.score = 0;
