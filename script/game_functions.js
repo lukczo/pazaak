@@ -173,6 +173,13 @@ function resetCardStyleAi (index) {
     _CARDSTACK.length = 0;
     _aiWOnRounds.length = 0;
     _humanWonRounds.length = 0;
+    aiRoundCounter.children[0].classList.remove('round-won');
+    aiRoundCounter.children[1].classList.remove('round-won');
+    aiRoundCounter.children[2].classList.remove('round-won');
+
+    playerRoundCounter.children[0].classList.remove('round-won');
+    playerRoundCounter.children[1].classList.remove('round-won');
+    playerRoundCounter.children[2].classList.remove('round-won');
 
     humanPlayer.cardPool.length = 0;
     humanPlayer.hand.length = 0;
