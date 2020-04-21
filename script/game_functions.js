@@ -63,6 +63,7 @@ function tossCards() {
 
           } else if (aiPlayer.score > 20) {
                  humanPlayer.winHandler(humanPlayer);
+                 
           } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
             humanPlayer.drawCards(humanPlayer);    
             showBtns();
@@ -117,12 +118,15 @@ function resetCardStyleAi (index) {
     }
   }
   
-  function start() {
+  function start(nextRound) {
     if (humanPlayer.hand.length > 0) {
       multiPlayer();
       clickSound();
       toggleGameButtons();
-      renderCardsBtns()
+
+      nextRound === 'continue'
+      ? console.log('Next round')
+      : renderCardsBtns()
 
       startBtn.removeEventListener('click', start);  
       drawCardBtn.addEventListener("click", multiPlayer);

@@ -94,7 +94,7 @@ class player {
     drawCardBtn.removeEventListener('click', multiPlayer);
     standBtn.removeEventListener("click", bindedToAiPlayer);
     continueBtn.classList.toggle('blocked');
-    continueBtn.addEventListener('click', start)
+    continueBtn.addEventListener('click', start.bind(null, 'continue'))
 
     switch (win){
       case gm:
