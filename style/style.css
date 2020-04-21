@@ -196,7 +196,12 @@ button:hover {
 }
 
 @media only screen and (max-width: 700px) {
+    .header :first-child h1 {
+        display: none;
+    }
     .player {
+        display: flex;
+        flex-wrap: wrap;
         width: 500px;
         min-height: 100px;
         margin: 0;
@@ -208,7 +213,7 @@ button:hover {
         margin: 0;
     }
     .header {
-        width: 100vw;
+        width: 500px;
         min-height: 0;
     }
     .hand {
@@ -220,7 +225,7 @@ button:hover {
         width: 50px;
         height: 75px;
         font-size: 2rem;
-        margin: 20px;
+        margin: 2px;
     }
     .playersHeader{
         font-size: 1.5rem;
@@ -237,6 +242,12 @@ button:hover {
 ul {
     display: inherit;
 }
-
-
+button {
+    width: 50px;
+    height: 50px;
+}
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
 }
