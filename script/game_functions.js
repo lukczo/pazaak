@@ -77,7 +77,15 @@ function enableBtns() {
 
 
   }
-  
+
+
+function standGame() {
+  disableBtns();
+  standBtn.setAttribute('disabled', 'true');
+  disableBtns();
+  aiHandler();
+  disableBtns();
+}
 function aiBehavior() {    
       aiPlayer.drawCards(aiPlayer);
 
@@ -133,7 +141,7 @@ function resetCardStyleAi (index) {
       startBtn.removeEventListener('click', start);  
       drawCardBtn.addEventListener("click", multiPlayer);
       /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
-      standBtn.addEventListener("click", bindedToAiPlayer);
+      standBtn.addEventListener("click", standGame);
       resetBtn.addEventListener("click", reset);      
       pickHandDeckBtn.removeEventListener('click', renderCards)      
   } else {
@@ -216,7 +224,7 @@ function resetCardStyleAi (index) {
     resetBtn.removeEventListener("click", reset);      
     drawCardBtn.removeEventListener('click', multiPlayer);
     /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
-    standBtn.removeEventListener("click", bindedToAiPlayer);
+    standBtn.removeEventListener("click", standGame);
     pickHandDeckBtn.addEventListener('click', renderCards);
 
     tossCards();
