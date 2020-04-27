@@ -16,6 +16,8 @@ const aiScorePlace = document.querySelector("#score-ai")
 const playerRoundCounter = document.querySelector('#player-won-rounds');
 const aiRoundCounter = document.querySelector('#ai-won-rounds');
 
+const playerNameDisplayed = document.querySelector('#pleayer-name-header');
+
 const playerPoolCards = document.querySelector("#player-pool").querySelectorAll('.pazaak-card');
 const aiPoolCards = document.querySelector("#ai-pool").querySelectorAll('.pazaak-card');
 

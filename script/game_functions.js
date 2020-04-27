@@ -24,30 +24,24 @@ function tossCards() {
     clickAudio.play();
   }
 
-  function showBtns() {
-    drawCardBtn.classList.remove('unclickable');
-    standBtn.classList.remove('unclickable');
-    drawCardBtn.addEventListener("click", multiPlayer);
-    standBtn.addEventListener("click", bindedToAiPlayer);
-  }
 
-  function toggleBtnsWhenTurn() {
-    drawCardBtn.classList.toggle('unclickable');
-    standBtn.classList.toggle('unclickable');
-  }
+function disableBtns() {
+  drawCardBtn.setAttribute('disabled', 'true');
+}
+
+function enableBtns() {
+  drawCardBtn.removeAttribute('disabled', 'false');
+}
+
 
   function aiHandler() {
     clickSound();
-    toggleBtnsWhenTurn();
-    drawCardBtn.addEventListener("click", multiPlayer);
-    standBtn.addEventListener("click", bindedToAiPlayer);
     aiBehavior();
+    enableBtns();
   }
   function uiResponseToTurns() {
     clickSound();
-    toggleBtnsWhenTurn();
-    standBtn.removeEventListener("click", bindedToAiPlayer);
-    drawCardBtn.removeEventListener("click", multiPlayer);
+    disableBtns()
   }
   function multiPlayer() {
  
@@ -66,10 +60,10 @@ function tossCards() {
                  
           } else if (humanPlayer.score < 20 && aiPlayer.score === 20) {
             humanPlayer.drawCards(humanPlayer);    
-            showBtns();
+            enableBtns();
           } else if ((humanPlayer.score === 20) && aiPlayer.score < 20) {
             setTimeout(aiHandler, 1000);
-            showBtns();
+            enableBtns();
         } else if (humanPlayer.score === 20 && aiPlayer.score === 20) {
             gm.winHandler(gm); /* outputs 'it's a draw' */
           } else {
@@ -79,6 +73,9 @@ function tossCards() {
       gm.winHandler(gm);
       console.log('Card pool length exceeded');
   }
+
+
+
   }
   
 function aiBehavior() {    
@@ -93,14 +90,14 @@ for (const [index, aiHandCard] of aiPlayer.hand.entries()){
     ? console.log('AI Uses hand card no:' +  aiPlayer.hand[index].value)
       + setTimeout(aiPlayer.useCard(index),1000)
       + resetCardStyleAi (index)
-      + showBtns() 
+/*       + showBtns()  */
     : console.log('Ai didnt use any hand cards');
     break
   } else if (aiPlayer.score > 20 && aiHandCard.value < 0  && aiHandCard !== null){ 
     (aiPlayer.score + aiHandCard.value) <= 20
     ? setTimeout(aiPlayer.useCard(index), 1000)
     + resetCardStyleAi (index)
-    + showBtns() 
+/*     + showBtns()  */
     : console.log('AI Uses hand card no:')
     break
   }
@@ -124,8 +121,10 @@ function resetCardStyleAi (index) {
     }
   }
   
-  function start() {
+  function start() {    
     if (humanPlayer.hand.length > 0) {
+      humanPlayer.name = prompt('Please enter your name');
+      playerNameDisplayed.innerHTML = humanPlayer.name;
       multiPlayer();
       clickSound();
       toggleGameButtons();
@@ -136,7 +135,7 @@ function resetCardStyleAi (index) {
       /* Declared in ui_functions.js: const bindedToAiPlayer = aiPlayer.turn.bind(aiPlayer); */
       standBtn.addEventListener("click", bindedToAiPlayer);
       resetBtn.addEventListener("click", reset);      
-      pickHandDeckBtn.removeEventListener('click', renderCards)
+      pickHandDeckBtn.removeEventListener('click', renderCards)      
   } else {
     alert('Please choose your cards first');
   }
@@ -165,7 +164,7 @@ function resetCardStyleAi (index) {
       cards.innerHTML = null;
     }
 
-    showBtns();
+    enableBtns();
     continueBtn.classList.toggle('blocked');
   }
 

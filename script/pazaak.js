@@ -89,10 +89,12 @@ class player {
     }
 
     /* */
-    drawCardBtn.classList.add('unclickable');
+/*     drawCardBtn.classList.add('unclickable');
     standBtn.classList.add('unclickable');
     drawCardBtn.removeEventListener('click', multiPlayer);
-    standBtn.removeEventListener("click", bindedToAiPlayer);
+    standBtn.removeEventListener("click", bindedToAiPlayer); */
+    disableBtns();
+
 
     switch (win){
       case gm:
@@ -154,9 +156,11 @@ class player {
 
 if (this === humanPlayer){
       resetCardStyle(playerHandDeck.children[num]);
-      playerHandDeck.children[num].innerHTML = null;    
+      playerHandDeck.children[num].innerHTML = null;   
+      disableBtns(); 
+      setTimeout(multiPlayer, 1000);
     } else if (this === aiPlayer){
-      showBtns();
+      enableBtns();
     } else {
       console.log('useCard() error');
     } 

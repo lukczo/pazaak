@@ -101,6 +101,12 @@ button:hover {
     color: dimgrey;
 }
 
+button:disabled {
+    background-color: darkslategrey;
+    color: dimgrey;
+}
+
+
 .unclickable:hover {    
     cursor: no-drop !important;
     background-color: darkslategrey;
