@@ -22,10 +22,14 @@ const playerPoolCards = document.querySelector("#player-pool").querySelectorAll(
 const aiPoolCards = document.querySelector("#ai-pool").querySelectorAll('.pazaak-card');
 
 const modal = document.querySelector('#modal');
-const backdrop = document.querySelector("#backdrop");
 const modalP = modal.getElementsByTagName('p')[0];
 const pickHandDeckBtn = document.querySelector("#pick-handdeck");
 const pazaakTitle = document.querySelector('.header').firstElementChild;
 
 const clickAudio = new Audio ('./assets/click.mp3')
 
+const cardInPlayerPool = document.querySelector('#player-pool').children[1]
+const modalCard = document.querySelector('.modal');
+const backdrop = document.querySelector('.backdrop');
+const modalBtn = modalCard.querySelector('button');
+const modalInput = modalCard.querySelector('input');

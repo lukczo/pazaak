@@ -11,8 +11,15 @@
     <link rel="stylesheet" href="./style/animation.css">
 </head>
 <body class="flex">
+<div class="backdrop"></div>
+    <div class="modal flex">
+        <h1 class="modal-header">Pazaak</h1>
+        <p>Goal of the game is to reach 20 points without going over, or at least come closer to it than the opponent. The player with the nearest sum to the number 20 wins the round, and the player who won 3 rounds won the match.</p>
+
+        <input type="player-name" placeholder="Enter your name here" autocomplete="off"> <button>Next</button>
+    </div>
+
 <div id="modal" class="flex blocked"><h1>GAME OVER :)</h1> <p>Click here to play again</p> </div>
-<div id="backdrop" class="blocked"></div>
 <main class="flex">
     <div class="header flex">
         <div class="flex"><h1>Pazaak</h1></div>

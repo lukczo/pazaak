@@ -131,8 +131,7 @@ function resetCardStyleAi (index) {
   
   function start() {    
     if (humanPlayer.hand.length > 0) {
-      humanPlayer.name = prompt('Please enter your name');
-      playerNameDisplayed.innerHTML = humanPlayer.name;
+
       multiPlayer();
       clickSound();
       toggleGameButtons();
