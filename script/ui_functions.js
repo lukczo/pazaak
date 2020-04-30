@@ -37,7 +37,13 @@ function renderWelcomeModal(){
 
 
 function chooseCardsPrompt(){
-  backdrop.classList.remove('blocked')
+  backdrop.classList.remove('blocked');
+  window.addEventListener('resize', ()=>{
+    window.innerWidth < 1365
+    ? backdrop.classList.add('blocked')
+    : backdrop.classList.remove('blocked')
+  })
+
   toggleAllBtns('off');
 
   const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
@@ -65,7 +71,12 @@ function chooseCardsPrompt(){
 }
 
 function resultModal(result){
-  backdrop.classList.remove('blocked')
+  backdrop.classList.remove('blocked');
+  window.addEventListener('resize', ()=>{
+    window.innerWidth < 1365
+    ? backdrop.classList.add('blocked')
+    : backdrop.classList.remove('blocked')
+  });
   toggleAllBtns('off');
 
   const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
@@ -88,7 +99,7 @@ function resultModal(result){
   } else if (result === 'aiWon') {
     renderModalContent = modalTemplateBody.querySelector('p').textContent = `Unfortunetely, you lose this round!`;
   } else if (result === 'won-final') {
-    renderModalContent = modalTemplateBody.querySelector('p').textContent = `Ah, victory! ${humanPlayer.name}, you have won the game!`;
+    renderModalContent = modalTemplateBody.querySelector('p').textContent = `${humanPlayer.name}, you have won the game!`;
   } else if (result === 'lose-final') {
     renderModalContent = modalTemplateBody.querySelector('p').textContent = 'YOU LOSE. Opponent wins the game. Better luck next time!';
   } else {
@@ -158,11 +169,7 @@ function toggleAllBtns(onOff){
 
 toggleAllBtns('off');
 window.addEventListener('resize', modalSizing);
-window.addEventListener('resize', ()=>{
-  window.innerWidth < 1365
-  ? backdrop.classList.add('blocked')
-  : backdrop.classList.remove('blocked')
-})
+
 
 
 
