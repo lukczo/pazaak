@@ -104,6 +104,7 @@ button:hover {
 button:disabled {
     background-color: darkslategrey;
     color: dimgrey;
+    cursor: no-drop !important;
 }
 
 

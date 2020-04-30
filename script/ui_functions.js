@@ -26,28 +26,143 @@ return false;
 
 const bindedToAiPlayer = aiPlayer.drawCards.bind(aiPlayer);
 
+function renderWelcomeModal(){
+  const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
+  modalTemplateBody.classList.add('modal');
+  renderModalContent = modalTemplateBody.querySelector('p').textContent = 'Goal of the game is to reach 20 points without going over, or at least come closer to it than the opponent. The player with the nearest sum to the number 20 wins the round, and the player who won 3 rounds won the match.';
+  mainTag.append(modalTemplateBody);
+  modalSizing();
+  welcomeModalFunctions();
+}
+
+
+function chooseCardsPrompt(){
+  backdrop.classList.remove('blocked')
+  toggleAllBtns('off');
+
+  const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
+  modalTemplateBody.classList.add('modal');
+  modalTemplateBody.children[2].remove();
+  modalTemplateBody.children[0].remove();
+  mainTag.append(modalTemplateBody);
+  renderModalContent = modalTemplateBody.querySelector('p').textContent = 'Please choose your cards first!';
+  modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 2.5rem;'
+
+  modalSizing()
+  
+
+  const modalBtn = modalTemplateBody.querySelector('.modal button');
+  
+
+  modalBtn.addEventListener('click', ()=>{ 
+    modalTemplateBody.remove();
+  backdrop.classList.add('blocked');
+  toggleAllBtns('on');
+ });
+  modalBtn.addEventListener('click', renderCards);
+  mainTag.append(modalTemplateBody);
+
+}
+
+function resultModal(result){
+  backdrop.classList.remove('blocked')
+  toggleAllBtns('off');
+
+  const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
+  modalTemplateBody.classList.add('modal');
+  modalTemplateBody.children[2].remove();
+  modalTemplateBody.children[0].remove();
+  mainTag.append(modalTemplateBody);
+  modalSizing();
+
+  modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 2.5rem;'
+
+  const modalBtn = modalTemplateBody.querySelector('.modal button');
+  
+
+
+  if (result === 'drawRound') {
+    renderModalContent = modalTemplateBody.querySelector('p').textContent = 'A draw! This round is set.';
+  } else if (result === 'humanWon') {
+    renderModalContent = modalTemplateBody.querySelector('p').textContent = `Good job ${humanPlayer.name}! You win this round.`;
+  } else if (result === 'aiWon') {
+    renderModalContent = modalTemplateBody.querySelector('p').textContent = `Unfortunetely, you lose this round!`;
+  } else if (result === 'won-final') {
+    renderModalContent = modalTemplateBody.querySelector('p').textContent = `Ah, victory! ${humanPlayer.name}, you have won the game!`;
+  } else if (result === 'lose-final') {
+    renderModalContent = modalTemplateBody.querySelector('p').textContent = 'YOU LOSE. Opponent wins the game. Better luck next time!';
+  } else {
+    new Error('Modal result error');
+  }
+
+
+ 
+  modalBtn.addEventListener('click', ()=>{ 
+    modalTemplateBody.remove();
+  backdrop.classList.add('blocked');
+  toggleAllBtns('on');
+  disableBtns();
+ });
+
+}
+
+renderWelcomeModal()
+
+function welcomeModalFunctions(){
+  const modalBtn = document.querySelector('.modal button');
+  const modalInput = document.querySelector('.modal input');
+  const modalCard = document.querySelector('.modal');
+
+  modalBtn.addEventListener('click', ()=>{
+    modalCard.remove();
+    backdrop.classList.add('blocked');
+    humanPlayer.name = modalInput.value;
+    playerNameDisplayed.innerHTML = humanPlayer.name;
+    toggleAllBtns('on');
+  })
+
+  function nameFieldValidation(){
+    modalInput.value.length > 0
+    ? modalBtn.removeAttribute('disabled', 'false')
+    : modalBtn.setAttribute('disabled', 'true')
+
+  modalInput.addEventListener('change', nameFieldValidation);
+  }
+  nameFieldValidation();
+}
+
+
 
 function modalSizing() {
-  modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2);
-  modalLeftPosition;
+  let modalCard = document.querySelector('.modal'); 
+
   modalCard.setAttribute('style', `left: ${modalLeftPosition}px; top: ${cardInPlayerPool.offsetTop}px; `);
 }
 
-modalSizing();
-window.addEventListener('resize', modalSizing);
 
-modalBtn.addEventListener('click', ()=>{
-  modalCard.classList.add('blocked');
-  backdrop.remove();
-  humanPlayer.name = modalInput.value;
-  playerNameDisplayed.innerHTML = humanPlayer.name;
-})
+function toggleAllBtns(onOff){
+  allBtns = Array.from(document.querySelectorAll('button'));
 
-function nameFieldValidation(){
-  modalInput.value.length > 0
-  ? modalBtn.removeAttribute('disabled', 'false')
-  : modalBtn.setAttribute('disabled', 'true')
+  if (onOff === 'on'){
+    for (const btns of allBtns){
+      btns.removeAttribute('disabled', true)
+  }
+  } else if (onOff === 'off'){
+    for (const btns of allBtns) {
+      btns.setAttribute('disabled', true)
+  }
+  } else {
+    console.log('errorrr')
+  }
 }
 
-nameFieldValidation();
-modalInput.addEventListener('change', nameFieldValidation)
+toggleAllBtns('off');
+window.addEventListener('resize', modalSizing);
+window.addEventListener('resize', ()=>{
+  window.innerWidth < 1365
+  ? backdrop.classList.add('blocked')
+  : backdrop.classList.remove('blocked')
+})
+
+
+

@@ -144,7 +144,7 @@ function resetCardStyleAi (index) {
       resetBtn.addEventListener("click", reset);      
       pickHandDeckBtn.removeEventListener('click', renderCards)      
   } else {
-    alert('Please choose your cards first');
+    chooseCardsPrompt();
   }
   }
 

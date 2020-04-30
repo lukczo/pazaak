@@ -85,7 +85,7 @@ class player {
 
 
     function draw() {
-          alert('`_^_^_^_^_^_ A draw! This set is tied `_^_^_^_^_^_') 
+      resultModal('drawRound')
     }
 
     /* */
@@ -217,21 +217,22 @@ if (this === humanPlayer){
 
 
 function humanWon() {
-  alert(`_^_^_^_^_^_${humanPlayer.name} has won_^_^_^_^_^_`);
   playerCardDom.classList.toggle('rotate-vert-center');
   _humanWonRounds.push(1);
   numberOfRoundsWonByHuman = _humanWonRounds.length;
 
   switch (numberOfRoundsWonByHuman){
     case 1: 
-    playerRoundCounter.children[0].classList.add('round-won');
+      resultModal('humanWon')
+      playerRoundCounter.children[0].classList.add('round-won');
     break;
     case 2:
+      resultModal('humanWon')
       playerRoundCounter.children[1].classList.add('round-won');
     break;
     case 3:
       playerRoundCounter.children[2].classList.add('round-won');
-      alert('Congratulations! You have won the game :)');
+      resultModal('won-final');
       continueBtn.classList.toggle('blocked');
       resetBtn.innerHTML = 'Play again?';
     break;
@@ -239,20 +240,21 @@ function humanWon() {
 }
 
 function aiWon() {
-  alert(`_^_^_^_^_^_${aiPlayer.name} has won_^_^_^_^_^_`) ;
   aiCardDom.classList.toggle('rotate-vert-center');
   _aiWOnRounds.push(1);
   numberOfRoundsWonByAi = _aiWOnRounds.length;
   switch (numberOfRoundsWonByAi){
     case 1: 
+      resultModal('aiWon')
     aiRoundCounter.children[0].classList.add('round-won');
     break;
     case 2:
+      resultModal('aiWon')
       aiRoundCounter.children[1].classList.add('round-won');
     break;
     case 3:
+      resultModal('lose-final');
       aiRoundCounter.children[2].classList.add('round-won');
-      alert('GAME OVER. AI has won the game, better luck next time!');
       continueBtn.classList.toggle('blocked');
       resetBtn.innerHTML = 'Play again?';
     break;
