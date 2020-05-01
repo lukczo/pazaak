@@ -201,5 +201,10 @@ window.addEventListener('resize', ()=>
         let currentModal = document.querySelector('.modal'); 
         currentModal.removeAttribute('style');
         currentModal.setAttribute('style', `left: ${document.querySelector('#ai-pool').offsetLeft}px; width: ${document.querySelector('#ai-pool').offsetWidth}px `);
+
       } 
+})
+
+window.addEventListener('resize', ()=>{
+  document.querySelector('.header').setAttribute('style', `top: ${document.querySelector('.ai').children[2].offsetTop}px;`)
 })
