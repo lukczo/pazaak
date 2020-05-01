@@ -26,6 +26,9 @@ return false;
 
 const bindedToAiPlayer = aiPlayer.drawCards.bind(aiPlayer);
 
+////////////////////////////////
+/* MODALS */
+
 function renderWelcomeModal(){
   const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
   modalTemplateBody.classList.add('modal');
@@ -33,15 +36,25 @@ function renderWelcomeModal(){
   mainTag.append(modalTemplateBody);
   modalSizing();
   welcomeModalFunctions();
+  toggleBackdrop();
 }
 
+function toggleBackdrop(){
+  const backdropTemplate = document.importNode(document.querySelector('.backdrop-template').content.children[0], true);
+  backdropTemplate.classList.add('backdrop');
+  mainTag.append(backdropTemplate);
+}
+
+function removeBackdrop(){
+  document.querySelector('.backdrop').remove();
+}
 
 function chooseCardsPrompt(){
-  backdrop.classList.remove('blocked');
+  toggleBackdrop();
   window.addEventListener('resize', ()=>{
     window.innerWidth < 1365
-    ? backdrop.classList.add('blocked')
-    : backdrop.classList.remove('blocked')
+    ? removeBackdrop()
+    : toggleBackdrop();
   })
 
   toggleAllBtns('off');
@@ -62,8 +75,8 @@ function chooseCardsPrompt(){
 
   modalBtn.addEventListener('click', ()=>{ 
     modalTemplateBody.remove();
-  backdrop.classList.add('blocked');
-  toggleAllBtns('on');
+    removeBackdrop();
+    toggleAllBtns('on');
  });
   modalBtn.addEventListener('click', renderCards);
   mainTag.append(modalTemplateBody);
@@ -126,7 +139,7 @@ function welcomeModalFunctions(){
 
   modalBtn.addEventListener('click', ()=>{
     modalCard.remove();
-    backdrop.classList.add('blocked');
+    removeBackdrop();
     humanPlayer.name = modalInput.value;
     playerNameDisplayed.innerHTML = humanPlayer.name;
     toggleAllBtns('on');

@@ -30,7 +30,7 @@ const cardInPlayerPool = document.querySelector('#player-pool').children[1]
 
 
 const modalCard = document.querySelector('.modal-template');
-const backdrop = document.querySelector('.backdrop');
+
 
 const mainTag = document.querySelector('main')
 
