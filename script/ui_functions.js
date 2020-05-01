@@ -34,7 +34,11 @@ function renderWelcomeModal(){
   modalTemplateBody.classList.add('modal');
   renderModalContent = modalTemplateBody.querySelector('p').textContent = 'Goal of the game is to reach 20 points without going over, or at least come closer to it than the opponent. The player with the nearest sum to the number 20 wins the round, and the player who won 3 rounds won the match.';
   mainTag.append(modalTemplateBody);
-  modalSizing();
+
+  window.innerWidth > 700
+  ? modalSizing()
+  : console.log('No modal sizig, screen too small');
+
   welcomeModalFunctions();
   toggleBackdrop();
 }
@@ -190,8 +194,12 @@ window.addEventListener('resize', modalSizing);
 window.addEventListener('resize', ()=>
 {
     if (window.innerWidth <= 700){
-        const aiHandDeckPosition = document.querySelector('.ai').children[2].offsetTop;
-        document.querySelector('.header').style.top = aiHandDeckPosition
-        toggleAllBtns('on');
+        const aiHandDeckPosition = document.querySelector('.ai').children[2];
+        document.querySelector('.header').style.top = aiHandDeckPosition.offsetTop
+ /*        toggleAllBtns('on'); */
+
+        let currentModal = document.querySelector('.modal'); 
+        currentModal.removeAttribute('style');
+        currentModal.setAttribute('style', `left: ${document.querySelector('#ai-pool').offsetLeft}px; width: ${document.querySelector('#ai-pool').offsetWidth}px `);
       } 
 })
