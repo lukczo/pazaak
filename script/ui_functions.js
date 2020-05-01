@@ -51,11 +51,11 @@ function removeBackdrop(){
 
 function chooseCardsPrompt(){
   toggleBackdrop();
-  window.addEventListener('resize', ()=>{
+/*   window.addEventListener('resize', ()=>{
     window.innerWidth < 1365
     ? removeBackdrop()
     : toggleBackdrop();
-  })
+  }) */
 
   toggleAllBtns('off');
 
@@ -84,12 +84,12 @@ function chooseCardsPrompt(){
 }
 
 function resultModal(result){
-  backdrop.classList.remove('blocked');
-  window.addEventListener('resize', ()=>{
+  toggleBackdrop();
+/*   window.addEventListener('resize', ()=>{
     window.innerWidth < 1365
-    ? backdrop.classList.add('blocked')
-    : backdrop.classList.remove('blocked')
-  });
+    ? removeBackdrop()
+    : toggleBackdrop();
+  }); */
   toggleAllBtns('off');
 
   const modalTemplateBody = document.importNode(modalCard.content.children[0], true);
@@ -123,7 +123,7 @@ function resultModal(result){
  
   modalBtn.addEventListener('click', ()=>{ 
     modalTemplateBody.remove();
-  backdrop.classList.add('blocked');
+    removeBackdrop();
   toggleAllBtns('on');
   disableBtns();
  });
@@ -158,9 +158,11 @@ function welcomeModalFunctions(){
 
 
 function modalSizing() {
-  let modalCard = document.querySelector('.modal'); 
+  let currentModal = document.querySelector('.modal'); 
 
-  modalCard.setAttribute('style', `left: ${modalLeftPosition}px; top: ${cardInPlayerPool.offsetTop}px; `);
+  const modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2);
+
+  currentModal.setAttribute('style', `left: ${modalLeftPosition}px; top: ${cardInPlayerPool.offsetTop}px; `);
 }
 
 
@@ -185,4 +187,11 @@ window.addEventListener('resize', modalSizing);
 
 
 
-
+window.addEventListener('resize', ()=>
+{
+    if (window.innerWidth <= 700){
+        const aiHandDeckPosition = document.querySelector('.ai').children[2].offsetTop;
+        document.querySelector('.header').style.top = aiHandDeckPosition
+        toggleAllBtns('on');
+      } 
+})
