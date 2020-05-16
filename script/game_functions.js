@@ -156,8 +156,8 @@ function resetCardStyleAi (index) {
     aiPlayer.score = 0;
     outputScore(humanPlayer.name, 0);
     outputScore(aiPlayer.name, 0);
-    playerCardDom.classList.remove('rotate-vert-center');    
-    aiCardDom.classList.remove('rotate-vert-center');
+    playerCardDom.classList.remove('shadow-drop-center');    
+    aiCardDom.classList.remove('shadow-drop-center');
 
     playerPool = Array.from(playerPoolCards);
     for (const cards of playerPool){

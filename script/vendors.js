@@ -34,4 +34,4 @@ const modalCard = document.querySelector('.modal-template');
 
 const mainTag = document.querySelector('main')
 
-const modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2);
+/* const modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2); */

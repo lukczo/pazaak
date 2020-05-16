@@ -221,17 +221,20 @@ button:disabled {
     .header :first-child h1 {
         display: none;
     }
+    .rounds-player {
+        width: 50px;
+    }
     .player {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-evenly;
-        width: 500px;
+        width: 100vw;
         min-height: 100px;
         margin: 0;
     }
     
     .ai {
-        width: 500px;
+        width: 100vw;
         min-height: 100px;
         margin: 0;
     }

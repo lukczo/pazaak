@@ -128,8 +128,8 @@ function resultModal(result){
   modalBtn.addEventListener('click', ()=>{ 
     modalTemplateBody.remove();
     removeBackdrop();
-  toggleAllBtns('on');
-  disableBtns();
+    toggleAllBtns('on');
+    disableBtns();
  });
 
 }
@@ -164,7 +164,7 @@ function welcomeModalFunctions(){
 function modalSizing() {
   let currentModal = document.querySelector('.modal'); 
 
-/*   const modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2); */
+  const modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2);
 
   currentModal.setAttribute('style', `left: ${modalLeftPosition}px; top: ${cardInPlayerPool.offsetTop}px; `);
 }

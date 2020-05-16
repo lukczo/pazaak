@@ -217,7 +217,7 @@ if (this === humanPlayer){
 
 
 function humanWon() {
-  playerCardDom.classList.toggle('rotate-vert-center');
+  playerCardDom.classList.toggle('shadow-drop-center');
   _humanWonRounds.push(1);
   numberOfRoundsWonByHuman = _humanWonRounds.length;
 
@@ -240,7 +240,7 @@ function humanWon() {
 }
 
 function aiWon() {
-  aiCardDom.classList.toggle('rotate-vert-center');
+  aiCardDom.classList.toggle('shadow-drop-center');
   _aiWOnRounds.push(1);
   numberOfRoundsWonByAi = _aiWOnRounds.length;
   switch (numberOfRoundsWonByAi){
