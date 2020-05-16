@@ -222,7 +222,7 @@ button:disabled {
         display: none;
     }
     .rounds-player {
-        width: 50px;
+        width: 15px;
     }
     .player {
         display: flex;
@@ -296,12 +296,12 @@ button {
 .modal {
     display: flex;
     position: absolute;
-    left: 15px;
+    left: 0;
     top: 100px;
     z-index: 1;
     background-color: darkslategrey;
     border-radius: 5px;
-    width: 424px;
+    width: 100vw;
     box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);;
 
     
