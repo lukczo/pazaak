@@ -219,3 +219,8 @@ window.addEventListener('resize', ()=>
 window.addEventListener('resize', ()=>{
   document.querySelector('.header').setAttribute('style', `top: ${document.querySelector('.ai').children[2].offsetTop}px;`)
 })
+
+
+if (navigator.vendor === 'Apple Computer, Inc.') {
+  alert('Safari Browser was detected. Unfortunetely Safari is not yet supported. Please use Chrome browser instead. My apologies for the inconvienience!');
+}
