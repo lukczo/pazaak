@@ -69,7 +69,7 @@ function chooseCardsPrompt(){
   modalTemplateBody.children[0].remove();
   mainTag.append(modalTemplateBody);
   renderModalContent = modalTemplateBody.querySelector('p').textContent = 'Please choose your cards first!';
-  modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 2.5rem;'
+  modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 1.5rem;'
 
   modalSizing()
   
@@ -105,7 +105,7 @@ function resultModal(result){
 
   
 
-  modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 2.5rem;'
+  modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 1.5rem;'
 
   const modalBtn = modalTemplateBody.querySelector('.modal button');
   
