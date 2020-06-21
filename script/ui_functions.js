@@ -103,6 +103,8 @@ function resultModal(result){
   mainTag.append(modalTemplateBody);
   modalSizing();
 
+  
+
   modalTemplateBody.querySelector('p').style='margin: 100px;font-size: 2.5rem;'
 
   const modalBtn = modalTemplateBody.querySelector('.modal button');
@@ -131,7 +133,6 @@ function resultModal(result){
     toggleAllBtns('on');
     disableBtns();
  });
-
 }
 
 renderWelcomeModal()
@@ -167,6 +168,16 @@ function modalSizing() {
   const modalLeftPosition = cardInPlayerPool.offsetLeft + (cardInPlayerPool.offsetWidth / 2);
 
   currentModal.setAttribute('style', `left: ${modalLeftPosition}px; top: ${cardInPlayerPool.offsetTop}px; `);
+
+  if (window.innerWidth <= 700){
+    const aiHandDeckPosition = document.querySelector('.ai').children[2];
+    document.querySelector('.header').style.top = aiHandDeckPosition.offsetTop
+/*        toggleAllBtns('on'); */
+
+    let currentModal = document.querySelector('.modal'); 
+    currentModal.removeAttribute('style');
+    currentModal.setAttribute('style', `left: ${document.querySelector('#ai-pool').offsetLeft}px; width: ${document.querySelector('#ai-pool').offsetWidth}px `);
+  } 
 }
 
 
